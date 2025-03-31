@@ -1,0 +1,130 @@
+name: flutter_application_images
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 0.0.1+1
+
+environment:
+  sdk: ^3.1.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  english_words: ^4.0.0
+  provider: ^6.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+  #   /data.json
+  # assets:
+  #   - assets/images/1.jpg
+  #   - assets/images/2.jpg
+  #   - assets/images/3.jpg
+  #   - assets/images/4.jpg
+  #   - assets/images/5.jpg
+  #   - assets/images/6.jpg
+  #   - assets/images/7.jpg
+  #   - assets/images/8.jpg
+  #   - assets/images/9.jpg
+  #   - assets/images/10.jpg
+  #   - assets/images/11.jpg
+  #   - assets/images/12.jpg
+  #   - assets/images/13.jpg
+  #   - assets/images/14.jpg
+  #   - assets/images/15.jpg
+  #   - assets/images/16.jpg
+  #   - assets/images/17.jpg
+  #   - assets/images/18.jpg
+  #   - assets/images/19.jpg
+  #   - assets/images/20.jpg
+  #   - assets/images/21.jpg
+  #   - assets/images/22.jpg
+  #   - assets/images/23.jpg
+  #   - assets/images/24.jpg
+  #   - assets/images/25.jpg
+  #   - assets/images/26.jpg
+  #   - assets/images/27.jpg
+  #   - assets/images/28.jpg
+  #   - assets/images/29.jpg
+  #   - assets/images/30.jpg
+  #   - assets/images/31.jpg
+  #   - assets/images/32.jpg
+  #   - assets/images/33.jpg
+  #   - assets/images/34.jpg
+  #   - assets/images/35.jpg
+  #   - assets/images/36.jpg
+  #   - assets/images/37.jpg
+  #   - assets/images/38.jpg
+  #   - assets/images/39.jpg
+  #   - assets/images/40.jpg
+  #   - assets/images/41.jpg
+  #   - assets/images/42.jpg
+  #   - assets/images/43.jpg
+  #   - assets/images/44.jpg
+  #   - assets/images/45.jpg
+  #   - assets/images/46.jpg
+  #   - assets/images/47.jpg
+  #   - assets/images/48.jpg
+  #   - assets/images/49.jpg
+  #   - assets/images/H1.jpg
+  #   - assets/images/H2.jpg
+  #   - assets/images/H3.jpg
+  #   - assets/images/H4.jpg
+  #   - assets/images/H5.jpg
+  #   - assets/images/H6.jpg
+  #   - assets/images/H7.jpg
+  #   - assets/images/H8.jpg
+  #   - assets/images/H9.jpg
+  #   - assets/images/H10.jpg
+  #   - assets/images/H11.jpg
+  #   - assets/images/H12.jpg
+  #   - assets/images/H13.jpg
+  #   - assets/images/H14.jpg
+  #   - assets/images/H15.jpg
+  #   - assets/images/H16.jpg
+  #   - assets/images/H17.jpg
+  #   - assets/images/H18.jpg
+  #   - assets/images/H19.jpg
+  #   - assets/images/H20.jpg
+  #   - assets/images/H21.jpg
+  #   - assets/images/H22.jpg
+  #   - assets/images/H23.jpg
+  #   - assets/images/H24.jpg
+  #   - assets/images/H25.jpg
+  #   - assets/images/H26.jpg
+  #   - assets/images/H27.jpg
+  #   - assets/images/H28.jpg
+  #   - assets/images/H29.jpg
+  #   - assets/images/H30.jpg
+  #   - assets/images/H31.jpg
+  #   - assets/images/H32.jpg
+  #   - assets/images/H33.jpg
+  #   - assets/images/H34.jpg
+  #   - assets/images/H35.jpg
+  #   - assets/images/H36.jpg
+  #   - assets/images/H37.jpg
+  #   - assets/images/H38.jpg
+  #   - assets/images/H39.jpg
+  #   - assets/images/H40.jpg
+  #   - assets/images/H41.jpg
+  #   - assets/images/H42.jpg
+  #   - assets/images/H43.jpg
+  #   - assets/images/H44.jpg
+  #   - assets/images/H45.jpg
+  #   - assets/images/H46.jpg
+  #   - assets/images/H47.jpg
+  #   - assets/images/H48.jpg
+  #   - assets/images/H49.jpg
+  #   - assets/images/end.jpg
+  #   - assets/images/blueright.jpg
+

@@ -1,0 +1,212 @@
+{
+    "Name": "Welcome to the Hindi Vowels and Consonants application",
+    "Description": "Identify vowels and consonants in the Hindi alphabet",
+    "Play": 
+    {
+        "Number of questions": 
+        {
+            "Default": 10,
+            "QuestionText": "How many questions do you want?",
+            "QuestionHint": "Enter #questions from 6 to 19, default question count = 10",
+            "ValidationRangeMin": 6,
+            "ValidationRangeMax": 19
+        },
+        "HardMode": "Yes",
+        "PlayModes": 
+        {
+            "GameType": "Button-Click",
+            "TotalOptions": 49,
+            "Button": 
+            {
+                "Back": 
+                {
+                    "Name": "Back"
+                },
+                "1":
+                {
+                    "Name": "Vowel"
+                },
+                "2":
+                {
+                    "Name": "Consonant"
+                },
+                "Hint1":
+                {
+                    "Type": "Image",
+                    "Name": "Hint1"
+                },
+                "Hint2":
+                {
+                    "Type": "Audio",
+                    "Name": "Hint2"
+                }
+            },
+            "Easy": 
+            [
+                {
+                    "Name": "Vowel",
+                    "Directory": "assets/games/vowel-consonant/easy/Vowel/Normal",
+                    "Hint1Directory": "assets/games/vowel-consonant/easy/Vowel/Hint1",
+                    "Hint2Directory": "assets/games/vowel-consonant/easy/Vowel/Hint2",
+                    "StartNumber": 1,
+                    "EndNumber": 10,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "Consonant",
+                    "Directory": "assets/games/vowel-consonant/easy/Consonant/Normal",
+                    "Hint1Directory": "assets/games/vowel-consonant/easy/Consonant/Hint1",
+                    "Hint2Directory": "assets/games/vowel-consonant/easy/Consonant/Hint2",
+                    "StartNumber": 14,
+                    "EndNumber": 44,
+                    "height": 200,
+                    "width": 350
+                }
+            ],
+            "Hard": 
+            [
+                {
+                    "Name": "Vowel",
+                    "Directory": "assets/games/vowel-consonant/hard/Vowel/Normal",
+                    "Hint1Directory": "assets/games/vowel-consonant/hard/Vowel/Hint1",
+                    "Hint2Directory": "assets/games/vowel-consonant/hard/Vowel/Hint2",
+                    "StartNumber": 11,
+                    "EndNumber": 13,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "Consonant",
+                    "Directory": "assets/games/vowel-consonant/hard/Consonant/Normal",
+                    "Hint1Directory": "assets/games/vowel-consonant/hard/Consonant/Hint1",
+                    "Hint2Directory": "assets/games/vowel-consonant/hard/Consonant/Hint2",
+                    "StartNumber": 45,
+                    "EndNumber": 49,
+                    "height": 200,
+                    "width": 350
+                }
+            ]                
+        }
+    },
+    "Learn": 
+    {
+        "GameType": "Button-Click",
+        "Button": 
+        {
+            "Back": 
+            {
+                "Name": "Previous"
+            },
+            "Next":
+            {
+                "Name": "Next"
+            }
+        },    
+        "Normal": 
+        [
+            {
+                "Name": "Vowel",
+                "Directory": "assets/games/vowel-consonant/easy/Vowel/Normal",
+                "StartNumber": 1,
+                "EndNumber": 10,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "Vowel",
+                "Directory": "assets/games/vowel-consonant/hard/Vowel/Normal",
+                "StartNumber": 11,
+                "EndNumber": 13,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "Consonant",
+                "Directory": "assets/games/vowel-consonant/easy/Consonant/Normal",
+                "StartNumber": 14,
+                "EndNumber": 44,
+                "height": 200,
+                "width": 350
+            },
+            {
+                "Name": "Consonant",
+                "Directory": "assets/games/vowel-consonant/hard/Consonant/Normal",
+                "StartNumber": 45,
+                "EndNumber": 49,
+                "height": 200,
+                "width": 350
+            }
+        ],    
+        "Hint1": 
+        [
+            {
+                "Name": "Vowel",
+                "Directory": "assets/games/vowel-consonant/easy/Vowel/Hint1",           
+                "StartNumber": 1,
+                "EndNumber": 10,
+                "height": 300,
+                "width": 300            
+            },
+            {
+                "Name": "Vowel",
+                "Directory": "assets/games/vowel-consonant/hard/Vowel/Hint1",           
+                "StartNumber": 11,
+                "EndNumber": 13,
+                "height": 300,
+                "width": 300            
+            },
+            {
+                "Name": "Consonant",
+                "Directory": "assets/games/vowel-consonant/easy/Consonant/Hint1",
+                "StartNumber": 14,
+                "EndNumber": 44,
+                "height": 200,
+                "width": 350                
+            },
+            {
+                "Name": "Consonant",
+                "Directory": "assets/games/vowel-consonant/hard/Consonant/Hint1",
+                "StartNumber": 45,
+                "EndNumber": 49,
+                "height": 200,
+                "width": 350                
+            }
+        ],
+        "Hint2": 
+        [
+            {
+                "Name": "Vowel",
+                "Directory": "assets/games/vowel-consonant/easy/Vowel/Hint2",           
+                "StartNumber": 1,
+                "EndNumber": 10,
+                "height": 300,
+                "width": 300            
+            },
+            {
+                "Name": "Vowel",
+                "Directory": "assets/games/vowel-consonant/hard/Vowel/Hint2",           
+                "StartNumber": 11,
+                "EndNumber": 13,
+                "height": 300,
+                "width": 300            
+            },
+            {
+                "Name": "Consonant",
+                "Directory": "assets/games/vowel-consonant/easy/Consonant/Hint2",
+                "StartNumber": 14,
+                "EndNumber": 44,
+                "height": 200,
+                "width": 350                
+            }, 
+            {
+                "Name": "Consonant",
+                "Directory": "assets/games/vowel-consonant/hard/Consonant/Hint2",
+                "StartNumber": 45,
+                "EndNumber": 49,
+                "height": 200,
+                "width": 350                
+            }
+        ]
+    }
+}
