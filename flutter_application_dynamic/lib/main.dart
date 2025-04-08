@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
@@ -7,7 +6,6 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart' as wi;
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 
 
@@ -35,6 +33,16 @@ String hint1Directory = '';
 String hint2FileName = '';
 String hint2Directory = '';
 String texts="";
+int defaultQuestionCount = 10;
+int maxNumber=0;
+int easyStartFirstNumber = 0;
+int easyEndFirstNumber = 0;
+int easyStartSecondNumber = 0;
+int easyEndSecondNumber = 0;
+int hardStartFirstNumber = 0;
+int hardEndFirstNumber = 0;
+int hardStartSecondNumber = 0;
+int hardEndSecondNumber = 0;
 
 /* The main function is the entry point of the Flutter application. */
 void main() {
@@ -70,8 +78,6 @@ class MyApp extends StatefulWidget {
     );
   }
 }
-
-class MyAppPageState extends State<MyApp> {
   // Function to load the games list from games.json
  Future<List<Game>> loadGames() async {
   String jsonString = await rootBundle.loadString('assets/games.json');
@@ -104,20 +110,20 @@ class MyAppPageState extends State<MyApp> {
     
     return allGameDetails;
   }
-
   void staticLoadGameDetails() {
     if (gameDetailsList.isEmpty) {
       // Use Future.delayed to call async functions after initState
       Future.delayed(Duration.zero, () async {
 
-        List<GameDetails> games = await loadAllGameDetails();
+        gameDetailsList = await loadAllGameDetails();
 
-        setState(() 
+        //setState(() 
         {
-          gameDetailsList = games;
+          //gameDetailsList = games;
           currentDirectoryIndex = 0;
           currentFileNumber = gameDetailsList[gamePicked].learn.normal[0].startNumber;
           currentDir = gameDetailsList[gamePicked].learn.normal[0].directory;
+          defaultQuestionCount = gameDetailsList[gamePicked].play.numberOfQuestions['DefaultQuestionCount'];
           texts = currentText = gameDetailsList[gamePicked].learn.normal[0].name;
           endFileNumber = gameDetailsList[gamePicked].learn.normal[0].endNumber;
           totalCurrentDirCount = gameDetailsList[gamePicked].learn.normal[0].endNumber - gameDetailsList[0].learn.normal[0].startNumber + 1;
@@ -130,11 +136,20 @@ class MyAppPageState extends State<MyApp> {
           hint2Exists = gameDetailsList[gamePicked].learn.hint2.isNotEmpty;
           if (hint2Exists) {
             hint2Directory = gameDetailsList[gamePicked].learn.hint2[0].directory;
-            hint2FileName = '$hint1Directory/H$currentFileNumber.jpg';
+            hint2FileName = '$hint2Directory/H$currentFileNumber.m4a';
           }
           currentFileName = '$currentDir/$currentFileNumber.jpg';
+          maxNumber=gameDetailsList[gamePicked].play.playModes['TotalOptions'];
+          easyStartFirstNumber = gameDetailsList[gamePicked].play.playModes['Easy'][0]['StartNumber'];
+          easyEndFirstNumber = gameDetailsList[gamePicked].play.playModes['Easy'][0]['EndNumber'];
+          easyStartSecondNumber = gameDetailsList[gamePicked].play.playModes['Easy'][1]['StartNumber'];
+          easyEndSecondNumber = gameDetailsList[gamePicked].play.playModes['Easy'][1]['EndNumber'];
+          hardStartFirstNumber = gameDetailsList[gamePicked].play.playModes['Hard'][0]['StartNumber'];
+          hardEndFirstNumber = gameDetailsList[gamePicked].play.playModes['Hard'][0]['EndNumber'];
+          hardStartSecondNumber = gameDetailsList[gamePicked].play.playModes['Hard'][1]['StartNumber'];
+          hardEndSecondNumber = gameDetailsList[gamePicked].play.playModes['Hard'][1]['EndNumber'];
         }
-        );
+        //);
 
         // Print all game details for verification
         for (var gameDetails in gameDetailsList) {
@@ -149,10 +164,7 @@ class MyAppPageState extends State<MyApp> {
     }
   }
 
-  //late List<GameDetails>? data;
-
-  //const MyApp({super.key,required this.gameDetailsList});
-
+class MyAppPageState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
@@ -172,16 +184,16 @@ class MyAppPageState extends State<MyApp> {
 }
 
 class MyAppState extends ChangeNotifier {
-  int questionCount = 10;  // Default question count
-  late int corans;  // Total correct answers, now dynamic
+  //int questionCount = 10;  // Default question count
+  late int correctAnswers;  // Total correct answers, now dynamic
   var randoom = Random().nextInt(49) + 1;
   late var current = randoom.toString();
-  late List<String> allWords;
+  late List<String> allQuestionsList;
   //late List<String> correct;  // Updated dynamically with question count
   bool done = false;
   late int numb;
-  var guesses = <String>[];
-  var conson = <String>[];
+  var button1Clicked = <String>[]; //guesses
+  var button2Clicked = <String>[]; //conson
   bool hard=false;
   bool hint1 = false;
   bool hint2 = false;
@@ -191,12 +203,12 @@ class MyAppState extends ChangeNotifier {
 
   // Set the number of questions and adjust related properties
   void setQuestionCount(int count) {
-    questionCount = count;
-    corans = count;
+    defaultQuestionCount = count;
+    correctAnswers = count;
     //correct = List.generate(count, (index) => (index + 1).toString());
-    allWords = [];
+    allQuestionsList = [];
     done = false;
-    guesses.clear();
+    button1Clicked.clear();
     Restart(false);
   }
 
@@ -214,21 +226,12 @@ class MyAppState extends ChangeNotifier {
     int minEndFirstNumber = gameDetailsList[gamePicked].play.playModes['Easy'][0]['EndNumber'];
     int minStartSecondNumber = gameDetailsList[gamePicked].play.playModes['Easy'][1]['StartNumber'];
     int minEndSecondNumber = gameDetailsList[gamePicked].play.playModes['Easy'][1]['EndNumber'];*/
-    var maxNumber=gameDetailsList[gamePicked].play.playModes['TotalOptions'];
-    //if (hard)
-    //{
-    //get the hard boundaries for both types of games
-    var maxStartFirstNumber = gameDetailsList[gamePicked].play.playModes['Hard'][0]['StartNumber'];
-    var maxEndFirstNumber = gameDetailsList[gamePicked].play.playModes['Hard'][0]['EndNumber'];
-    var maxStartSecondNumber = gameDetailsList[gamePicked].play.playModes['Hard'][1]['StartNumber'];
-    var maxEndSecondNumber = gameDetailsList[gamePicked].play.playModes['Hard'][1]['EndNumber'];
-    //}
-    if (allWords.length==questionCount){
+    if (allQuestionsList.length==defaultQuestionCount){
       done=true;
     }
     if (!done) {
-      if (allWords.indexOf(current) < allWords.length - 1) {
-        current = allWords[allWords.indexOf(current) + 1];
+      if (allQuestionsList.indexOf(current) < allQuestionsList.length - 1) {
+        current = allQuestionsList[allQuestionsList.indexOf(current) + 1];
       } else {
         int counter = 0;
         if(hard){
@@ -236,24 +239,24 @@ class MyAppState extends ChangeNotifier {
           randoom = Random().nextInt(maxNumber) + 1;
           current = randoom.toString();
           counter++;
-        } while (allWords.contains(current) && counter <= questionCount * 64);
+        } while (allQuestionsList.contains(current) && counter <= defaultQuestionCount * 64);
         }
         else{
           do {
           randoom = Random().nextInt(maxNumber) + 1;
           current = randoom.toString();
           counter++;
-        } while ((allWords.contains(current)|| (maxStartFirstNumber<=randoom && randoom<=maxEndFirstNumber)||(maxStartSecondNumber<=randoom && randoom<=maxEndSecondNumber)) && counter <= questionCount * 64);
+        } while ((allQuestionsList.contains(current)|| (hardStartFirstNumber<=randoom && randoom<=hardEndFirstNumber)||(hardStartSecondNumber<=randoom && randoom<=hardEndSecondNumber)) && counter <= defaultQuestionCount * 64);
         }
-        if (counter <= questionCount * maxNumber) {
-          allWords.add(current);
-          print(allWords);
+        if (counter <= defaultQuestionCount * maxNumber) {
+          allQuestionsList.add(current);
+          print(allQuestionsList);
         } else {
           current = "end";
           done = true;
         }
       }
-      numb = allWords.indexOf(current) + 1;
+      numb = allQuestionsList.indexOf(current) + 1;
       hint1= false;
       hint2= false;
       notifyListeners();
@@ -262,47 +265,47 @@ class MyAppState extends ChangeNotifier {
   }
 
   void getPrev() {
-    if (!done && allWords.indexOf(current) > 0) {
-      current = allWords[allWords.indexOf(current) - 1];
-      numb = allWords.indexOf(current) + 1;
+    if (!done && allQuestionsList.indexOf(current) > 0) {
+      current = allQuestionsList[allQuestionsList.indexOf(current) - 1];
+      numb = allQuestionsList.indexOf(current) + 1;
       hint1=hint2=false;
       notifyListeners();
     }
   }
   void toggleGuess(){
-    if (guesses.contains(current)) {
-      guesses.remove(current);
+    if (button1Clicked.contains(current)) {
+      button1Clicked.remove(current);
     } else{
-      guesses.add(current);
+      button1Clicked.add(current);
     }
   }
-  void con() {
-    if (guesses.contains(current)) {
-      guesses.remove(current);
+  void Button2Click() {
+    if (button1Clicked.contains(current)) {
+      button1Clicked.remove(current);
     } 
-    if (!conson.contains(current)) {
-      conson.add(current);
+    if (!button2Clicked.contains(current)) {
+      button2Clicked.add(current);
     }
     notifyListeners();
   }
-  void Vowel() {
-    if (!guesses.contains(current)) {
-      guesses.add(current);
+  void Button1Click() {
+    if (!button1Clicked.contains(current)) {
+      button1Clicked.add(current);
     }
-    if (conson.contains(current)) {
-      conson.remove(current);
+    if (button2Clicked.contains(current)) {
+      button2Clicked.remove(current);
     } 
     notifyListeners();
   }
   void Restart(end) {
-    allWords.clear();
-    randoom = Random().nextInt(questionCount) + 1;
+    allQuestionsList.clear();
+    randoom = Random().nextInt(defaultQuestionCount) + 1;
     current = randoom.toString();
-    allWords.add(current);
+    allQuestionsList.add(current);
     done = false;
     numb = 1;
-    guesses.clear();
-    conson.clear();
+    button1Clicked.clear();
+    button2Clicked.clear();
     hint1=false;
     hint2=false;
     if (end==false){
@@ -329,99 +332,6 @@ class StartPage extends StatefulWidget {
 }
 
 class StartPageState extends State<StartPage> {
-  // Function to load the games list from games.json
- Future<List<Game>> loadGames() async {
-  String jsonString = await rootBundle.loadString('assets/games.json');
-    print('6666  $jsonString 777');
-  
-  Map<String, dynamic> decoded = jsonDecode(jsonString);
-  List<dynamic> gamesList = decoded['games'];
-    print('6666  each game $gamesList 777');
-
-  return gamesList.map((gameJson) => Game.fromJson(gameJson)).toList();
-}
-
- // Function to load game details from game.json
-  Future<GameDetails> loadGameDetails(String gameDirectory) async {
-    String jsonString = await rootBundle.loadString('assets/games/$gameDirectory/game.json');
-    print('6666  jsonString $jsonString 777');
-    Map<String, dynamic> decoded = jsonDecode(jsonString);
-    print('6666  each game details $decoded 777');
-    GameDetails temp =  GameDetails.fromJson(decoded);
-    print ('6666  temp $temp 777');
-    return temp;
-  }
-  // Function to load all game details (for all games in the list)
-  Future<List<GameDetails>> loadAllGameDetails() async {
-    List<Game> games = await loadGames();
-    
-    // Load the game details for each game in the list
-    List<GameDetails> allGameDetails = [];
-    for (var game in games) {
-      GameDetails gameDetails = await loadGameDetails(game.directory);
-          print('6666  adding $gameDetails 777');
-
-      allGameDetails.add(gameDetails);
-          print('6666  added allGameDetails $allGameDetails 777');
-
-    }
-    
-    return allGameDetails;
-  }
-
-
-  void staticLoadGameDetails() {
-    if (gameDetailsList.isEmpty) {
-      // Use Future.delayed to call async functions after initState
-      Future.delayed(Duration.zero, () async {
-
-        List<GameDetails> games = await loadAllGameDetails();
-
-        setState(() 
-        {
-              print('6666  setting  777');
-
-          gameDetailsList = games;
-                        print('6666  gameDetailsList $gameDetailsList  777');
-
-          currentDirectoryIndex = 0;
-          currentFileNumber = gameDetailsList[gamePicked].learn.normal[0].startNumber;
-          currentDir = gameDetailsList[gamePicked].learn.normal[0].directory;
-          texts = currentText = gameDetailsList[gamePicked].learn.normal[0].name;
-          endFileNumber = gameDetailsList[gamePicked].learn.normal[0].endNumber;
-          totalCurrentDirCount = gameDetailsList[gamePicked].learn.normal[0].endNumber - gameDetailsList[0].learn.normal[0].startNumber + 1;
-          totalDirectories = gameDetailsList[gamePicked].learn.normal.length;
-          hint1Exists = gameDetailsList[gamePicked].learn.hint1.isNotEmpty;
-          if (hint1Exists) {
-            hint1Directory = gameDetailsList[gamePicked].learn.hint1[0].directory;
-            hint1FileName = '$hint1Directory/H$currentFileNumber.jpg';
-          }
-          hint2Exists = gameDetailsList[gamePicked].learn.hint2.isNotEmpty;
-          if (hint2Exists) {
-            hint2Directory = gameDetailsList[gamePicked].learn.hint2[0].directory;
-            hint2FileName = '$hint1Directory/H$currentFileNumber.jpg';
-          }
-          currentFileName = '$currentDir/$currentFileNumber.jpg';
-                                  print('6666  set $gameDetailsList  777');
-
-        }
-        );
-
-        // Print all game details for verification
-        for (var gameDetails in gameDetailsList) {
-          print('Game Name: ${gameDetails.name}');
-          print('Description: ${gameDetails.description}');
-          print('Play Modes: ${gameDetails.play.playModes}');
-          print('Normal Items: ${gameDetails.learn.normal.map((item) => item.name).join(", ")}');
-          print('Hint1 Items: ${gameDetails.learn.hint1.map((item) => item.name).join(", ")}');
-          print('---');
-        }
-      });
-      //return gameDetailsList;
-    }
-  }
-
-  //late List<GameDetails>? data;
   StartPageState();
 
   @override
@@ -624,90 +534,6 @@ class LearnPage extends StatefulWidget {
 }
 
 class LearnPageState extends State<LearnPage> {
-  // Function to load the games list from games.json
- Future<List<Game>> loadGames() async {
-  String jsonString = await rootBundle.loadString('assets/games.json');
-    print('8888  $jsonString 9999');  
-  Map<String, dynamic> decoded = jsonDecode(jsonString);
-  List<dynamic> gamesList = decoded['games'];
-    print('8888 list $gamesList 9999');  
-  return gamesList.map((gameJson) => Game.fromJson(gameJson)).toList();
-}
-
- // Function to load game details from game.json
-  Future<GameDetails> loadGameDetails(String gameDirectory) async {
-    String jsonString = await rootBundle.loadString('assets/games/$gameDirectory/game.json');
-    Map<String, dynamic> decoded = jsonDecode(jsonString);
-    print('8888 decoded  $decoded 9999');  
-    
-    return GameDetails.fromJson(decoded);
-  }
-  // Function to load all game details (for all games in the list)
-  Future<List<GameDetails>> loadAllGameDetails() async {
-    List<Game> games = await loadGames();
-    
-    // Load the game details for each game in the list
-    List<GameDetails> allGameDetails = [];
-    for (var game in games) {
-      GameDetails gameDetails = await loadGameDetails(game.directory);
-      allGameDetails.add(gameDetails);
-    }
-    
-    return allGameDetails;
-  }
-
-  void staticLoadGameDetails() {
-    List<GameDetails> games = [];
-    if (gameDetailsList.isEmpty) {
-      // Use Future.delayed to call async functions after initState
-      Future.delayed(Duration.zero, () async {
-
-         games = await loadAllGameDetails();
-      });
-
-        setState(() 
-        {
-          if (gameDetailsList.isNotEmpty) {
-            gameDetailsList = games;
-            currentDirectoryIndex = 0;
-            currentFileNumber = gameDetailsList[gamePicked].learn.normal[0].startNumber;
-            currentDir = gameDetailsList[gamePicked].learn.normal[0].directory;
-            texts = currentText = gameDetailsList[gamePicked].learn.normal[0].name;
-            endFileNumber = gameDetailsList[gamePicked].learn.normal[0].endNumber;
-            totalCurrentDirCount = gameDetailsList[gamePicked].learn.normal[0].endNumber - gameDetailsList[0].learn.normal[0].startNumber + 1;
-            totalDirectories = gameDetailsList[gamePicked].learn.normal.length;
-            hint1Exists = gameDetailsList[gamePicked].learn.hint1.isNotEmpty;
-            if (hint1Exists) {
-              hint1Directory = gameDetailsList[gamePicked].learn.hint1[0].directory;
-              hint1FileName = '$hint1Directory/H$currentFileNumber.jpg';
-            }
-            hint2Exists = gameDetailsList[gamePicked].learn.hint2.isNotEmpty;
-            if (hint2Exists) {
-              hint2Directory = gameDetailsList[gamePicked].learn.hint2[0].directory;
-              hint2FileName = '$hint2Directory/H$currentFileNumber.m4a';
-            }
-            currentFileName = '$currentDir/$currentFileNumber.jpg';
-          }
-          else {
-            print('LEARNPAGESTATE: No game details available.');
-          }
-        }
-        );
-
-        // Print all game details for verification
-        for (var gameDetails in gameDetailsList) {
-          print('Game Name: ${gameDetails.name}');
-          print('Description: ${gameDetails.description}');
-          print('Play Modes: ${gameDetails.play.playModes}');
-          print('Normal Items: ${gameDetails.learn.normal.map((item) => item.name).join(", ")}');
-          print('Hint1 Items: ${gameDetails.learn.hint1.map((item) => item.name).join(", ")}');
-          print('---');
-        }
-      //});
-    }
-  }
-
-  //late List<GameDetails>? data;
   LearnPageState();
   final AudioPlayer _audioPlayer = AudioPlayer()..setReleaseMode(ReleaseMode.STOP); // Create an instance of AudioPlayer
 
@@ -960,83 +786,6 @@ class SetQuestionCountPage extends StatefulWidget {
 class SetQuestionCountPageState extends State<SetQuestionCountPage> {
   final TextEditingController _controller = TextEditingController();
   String errorMessage = '';
-  // Function to load the games list from games.json
- Future<List<Game>> loadGames() async {
-  String jsonString = await rootBundle.loadString('assets/games.json');
-    print('00000  $jsonString 888');
-  Map<String, dynamic> decoded = jsonDecode(jsonString);
-  List<dynamic> gamesList = decoded['games'];
-    print('00000  gamesList $gamesList 888');
-
-  return gamesList.map((gameJson) => Game.fromJson(gameJson)).toList();
-}
-
- // Function to load game details from game.json
-  Future<GameDetails> loadGameDetails(String gameDirectory) async {
-    String jsonString = await rootBundle.loadString('assets/games/$gameDirectory/game.json');
-    Map<String, dynamic> decoded = jsonDecode(jsonString);
-    print('00000  decoded $decoded 888');
-    return GameDetails.fromJson(decoded);
-  }
-  // Function to load all game details (for all games in the list)
-  Future<List<GameDetails>> loadAllGameDetails() async {
-    List<Game> games = await loadGames();
-    
-    // Load the game details for each game in the list
-    List<GameDetails> allGameDetails = [];
-    for (var game in games) {
-      GameDetails gameDetails = await loadGameDetails(game.directory);
-      allGameDetails.add(gameDetails);
-    }
-    
-    return allGameDetails;
-  }
-
-  void staticLoadGameDetails() {
-    if (gameDetailsList.isEmpty) {
-      // Use Future.delayed to call async functions after initState
-      Future.delayed(Duration.zero, () async {
-
-        List<GameDetails> games = await loadAllGameDetails();
-
-        setState(() 
-        {
-          gameDetailsList = games;
-          currentDirectoryIndex = 0;
-          currentFileNumber = gameDetailsList[gamePicked].learn.normal[0].startNumber;
-          currentDir = gameDetailsList[gamePicked].learn.normal[0].directory;
-          texts = currentText = gameDetailsList[gamePicked].learn.normal[0].name;
-          endFileNumber = gameDetailsList[gamePicked].learn.normal[0].endNumber;
-          totalCurrentDirCount = gameDetailsList[gamePicked].learn.normal[0].endNumber - gameDetailsList[0].learn.normal[0].startNumber + 1;
-          totalDirectories = gameDetailsList[gamePicked].learn.normal.length;
-          hint1Exists = gameDetailsList[gamePicked].learn.hint1.isNotEmpty;
-          if (hint1Exists) {
-            hint1Directory = gameDetailsList[gamePicked].learn.hint1[0].directory;
-            hint1FileName = '$hint1Directory/H$currentFileNumber.jpg';
-          }
-          hint2Exists = gameDetailsList[gamePicked].learn.hint2.isNotEmpty;
-          if (hint2Exists) {
-            hint2Directory = gameDetailsList[gamePicked].learn.hint2[0].directory;
-            hint2FileName = '$hint1Directory/H$currentFileNumber.jpg';
-          }
-          currentFileName = '$currentDir/$currentFileNumber.jpg';
-        }
-        );
-
-        // Print all game details for verification
-        for (var gameDetails in gameDetailsList) {
-          print('Game Name: ${gameDetails.name}');
-          print('Description: ${gameDetails.description}');
-          print('Play Modes: ${gameDetails.play.playModes}');
-          print('Normal Items: ${gameDetails.learn.normal.map((item) => item.name).join(", ")}');
-          print('Hint1 Items: ${gameDetails.learn.hint1.map((item) => item.name).join(", ")}');
-          print('---');
-        }
-      });
-    }
-  }
-
-  //late List<GameDetails>? data;
   SetQuestionCountPageState();
 
   @override
@@ -1211,7 +960,7 @@ class SetQuestionCountPageState extends State<SetQuestionCountPage> {
                           });
                         }
                       } else {
-                        int defaultNumber = gameDetailsList[gamePicked].play.numberOfQuestions['Default'];
+                        int defaultNumber = gameDetailsList[gamePicked].play.numberOfQuestions['DefaultQuestionCount'];
                         appState.setQuestionCount(defaultNumber);
                         Navigator.push(
                           context,
@@ -1336,83 +1085,6 @@ class GeneratorPage extends StatefulWidget {
 }
 
 class GeneratorPageState extends State<GeneratorPage> {
-  // Function to load the games list from games.json
- Future<List<Game>> loadGames() async {
-  String jsonString = await rootBundle.loadString('assets/games.json');
-  print('1111 $jsonString 22222');
-  Map<String, dynamic> decoded = jsonDecode(jsonString);
-  List<dynamic> gamesList = decoded['games'];
-  print('1111 $jsonString 22222');
-
-  return gamesList.map((gameJson) => Game.fromJson(gameJson)).toList();
-}
-
- // Function to load game details from game.json
-  Future<GameDetails> loadGameDetails(String gameDirectory) async {
-    String jsonString = await rootBundle.loadString('assets/games/$gameDirectory/game.json');
-    Map<String, dynamic> decoded = jsonDecode(jsonString);
-    return GameDetails.fromJson(decoded);
-  }
-  // Function to load all game details (for all games in the list)
-  Future<List<GameDetails>> loadAllGameDetails() async {
-    List<Game> games = await loadGames();
-    
-    // Load the game details for each game in the list
-    List<GameDetails> allGameDetails = [];
-    for (var game in games) {
-      GameDetails gameDetails = await loadGameDetails(game.directory);
-      allGameDetails.add(gameDetails);
-    }
-    
-    return allGameDetails;
-  }
-
-
-  void staticLoadGameDetails() {
-    if (gameDetailsList.isEmpty) {
-      // Use Future.delayed to call async functions after initState
-      Future.delayed(Duration.zero, () async {
-
-        List<GameDetails> games = await loadAllGameDetails();
-
-        setState(() 
-        {
-          gameDetailsList = games;
-          currentDirectoryIndex = 0;
-          currentFileNumber = gameDetailsList[gamePicked].learn.normal[0].startNumber;
-          currentDir = gameDetailsList[gamePicked].learn.normal[0].directory;
-          texts = currentText = gameDetailsList[gamePicked].learn.normal[0].name;
-          endFileNumber = gameDetailsList[gamePicked].learn.normal[0].endNumber;
-          totalCurrentDirCount = gameDetailsList[gamePicked].learn.normal[0].endNumber - gameDetailsList[0].learn.normal[0].startNumber + 1;
-          totalDirectories = gameDetailsList[gamePicked].learn.normal.length;
-          hint1Exists = gameDetailsList[gamePicked].learn.hint1.isNotEmpty;
-          if (hint1Exists) {
-            hint1Directory = gameDetailsList[gamePicked].learn.hint1[0].directory;
-            hint1FileName = '$hint1Directory/H$currentFileNumber.jpg';
-          }
-          hint2Exists = gameDetailsList[gamePicked].learn.hint2.isNotEmpty;
-          if (hint2Exists) {
-            hint2Directory = gameDetailsList[gamePicked].learn.hint2[0].directory;
-            hint2FileName = '$hint1Directory/H$currentFileNumber.jpg';
-          }
-          currentFileName = '$currentDir/$currentFileNumber.jpg';
-        }
-        );
-
-        // Print all game details for verification
-        for (var gameDetails in gameDetailsList) {
-          print('Game Name: ${gameDetails.name}');
-          print('Description: ${gameDetails.description}');
-          print('Play Modes: ${gameDetails.play.playModes}');
-          print('Normal Items: ${gameDetails.learn.normal.map((item) => item.name).join(", ")}');
-          print('Hint1 Items: ${gameDetails.learn.hint1.map((item) => item.name).join(", ")}');
-          print('---');
-        }
-      });
-    }
-  }
-
-  //late List<GameDetails>? data;
   GeneratorPageState();
 
   @override
@@ -1438,8 +1110,8 @@ class GeneratorPageState extends State<GeneratorPage> {
       hint2String = gameDetailsList[gamePicked].play.playModes['Button']['Hint2']['Name'];
     }
 
-    if (!appState.allWords.contains(pair)) {
-      appState.allWords.add(pair);
+    if (!appState.allQuestionsList.contains(pair)) {
+      appState.allQuestionsList.add(pair);
     }
 
     if (appState.done==false){
@@ -1485,7 +1157,7 @@ class GeneratorPageState extends State<GeneratorPage> {
                   SizedBox(width: 10),
                   ElevatedButton(
                   onPressed: () {
-                    appState.Vowel();
+                    appState.Button1Click();
                     appState.getNext();
                   },
                   child: Text(button1String.toString()),
@@ -1493,7 +1165,7 @@ class GeneratorPageState extends State<GeneratorPage> {
                   SizedBox(width: 10),
                   ElevatedButton(
                   onPressed: () {
-                    appState.con();
+                    appState.Button2Click();
                     appState.getNext();
                   },
                   child: Text(button2String.toString()),
@@ -1573,7 +1245,24 @@ class BigCard extends StatelessWidget {
     final style = theme.textTheme.displayMedium!.copyWith(
       color: theme.colorScheme.onPrimary,
     );
-    return Image.asset('assets/images/$current.jpg');
+    int currentNumber = int.parse(current);
+    var directory = "";
+    if (currentNumber >= easyStartFirstNumber && currentNumber <= easyEndFirstNumber) {
+      directory = gameDetailsList[gamePicked].play.playModes['Easy'][0]['Directory'];
+      return Image.asset('$directory/$current.jpg');
+    } else if (currentNumber >= easyStartSecondNumber && currentNumber <= easyEndSecondNumber) {
+      directory = gameDetailsList[gamePicked].play.playModes['Easy'][1]['Directory'];
+      return Image.asset('$directory/$current.jpg');
+    } else if (currentNumber >= hardStartFirstNumber && currentNumber <= hardEndFirstNumber) {
+      directory = gameDetailsList[gamePicked].play.playModes['Hard'][0]['Directory'];
+      return Image.asset('$directory/$current.jpg');
+    } else if (currentNumber >= hardStartSecondNumber && currentNumber <= hardEndSecondNumber) {
+      directory = gameDetailsList[gamePicked].play.playModes['Hard'][1]['Directory'];
+      return Image.asset('$directory/$current.jpg');
+    }
+    else {
+      return Image.asset('assets/images/blueright.jpg');
+    }
   }
 }
 
@@ -1735,19 +1424,19 @@ class EndPage extends StatelessWidget {
     //appState.Restart();
     var missing=<String>[];
     var cmissing=<String>[];
-    for (var pair in appState.allWords){
+    for (var pair in appState.allQuestionsList){
         print(pair);
         if(pair!="end"){
-          if (false==appState.guesses.contains(pair) && (int.parse(pair)<= gameDetailsList[gamePicked].play.playModes['Hard'][0]['EndNumber'])){
+          if (false==appState.button1Clicked.contains(pair) && (int.parse(pair)<= gameDetailsList[gamePicked].play.playModes['Hard'][0]['EndNumber'])){
             missing.add(pair);
           }
-          else if (false==appState.conson.contains(pair) && (int.parse(pair)> gameDetailsList[gamePicked].play.playModes['Hard'][0]['EndNumber'])){
+          else if (false==appState.button2Clicked.contains(pair) && (int.parse(pair)> gameDetailsList[gamePicked].play.playModes['Hard'][0]['EndNumber'])){
             cmissing.add(pair);
           }
         }
     }
 
-    var percent=(((appState.allWords.length-missing.length-cmissing.length)/appState.allWords.length)*100).ceil();
+    var percent=(((appState.allQuestionsList.length-missing.length-cmissing.length)/appState.allQuestionsList.length)*100).ceil();
     //appState.Restart();
     /*return ListView(
       children: [
@@ -1767,7 +1456,7 @@ class EndPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'You got ${appState.allWords.length-missing.length-cmissing.length} questions right out of ${appState.allWords.length} questions.\n'
+          'You got ${appState.allQuestionsList.length-missing.length-cmissing.length} questions right out of ${appState.allQuestionsList.length} questions.\n'
           'You got $percent% of the answers right. Good Job!!',
           style: TextStyle(fontSize: 16), // Adjust font size if needed
           textAlign: TextAlign.center,
@@ -1843,21 +1532,34 @@ class EndPage extends StatelessWidget {
               String item;
               String category;
               String categorys;
+              var button1String = gameDetailsList[gamePicked].play.playModes['Button']['1']['Name'];
+              var button2String = gameDetailsList[gamePicked].play.playModes['Button']['2']['Name'];
+
               // Merge the two lists
               if (index < missing.length) {
                 item = missing[index]; 
-                category = "Vowel"; 
-                categorys = "Consonant";
+                category = button1String;//"Vowel"; 
+                categorys = button2String;//"Consonant";
               } else {
                 item = cmissing[index - missing.length]; 
-                category = "Consonant"; 
-                categorys = "Vowel"; 
+                category = button2String;//"Consonant"; 
+                categorys = button1String;//"Vowel"; 
               }
-
+              int currentNumber = int.parse(item);
+              var directory = "";
+              if (currentNumber >= easyStartFirstNumber && currentNumber <= easyEndFirstNumber) {
+                directory = gameDetailsList[gamePicked].play.playModes['Easy'][0]['Directory'];
+              } else if (currentNumber >= easyStartSecondNumber && currentNumber <= easyEndSecondNumber) {
+                directory = gameDetailsList[gamePicked].play.playModes['Easy'][1]['Directory'];
+              } else if (currentNumber >= hardStartFirstNumber && currentNumber <= hardEndFirstNumber) {
+                directory = gameDetailsList[gamePicked].play.playModes['Hard'][0]['Directory'];
+              } else if (currentNumber >= hardStartSecondNumber && currentNumber <= hardEndSecondNumber) {
+                directory = gameDetailsList[gamePicked].play.playModes['Hard'][1]['Directory'];
+              }
               return Column(
                 children: [
                   Expanded(
-                    child: Image.asset('assets/images/$item.jpg'), 
+                    child: Image.asset('$directory/$item.jpg'), 
                   ),
                   Text(
                     "Correct Answer: $category \n""Your Answer: $categorys",

@@ -5,7 +5,7 @@
     {
         "Number of questions": 
         {
-            "Default": 10,
+            "DefaultQuestionCount": 10,
             "QuestionText": "How many questions do you want?",
             "QuestionHint": "Enter #questions from 6 to 19, default question count = 10",
             "ValidationRangeMin": 6,
