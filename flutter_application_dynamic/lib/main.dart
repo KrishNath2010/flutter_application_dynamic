@@ -1097,9 +1097,14 @@ class GeneratorPageState extends State<GeneratorPage> {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
-    var button1String = gameDetailsList[gamePicked].play.playModes['Button']['1']['Name'];
-    var button2String = gameDetailsList[gamePicked].play.playModes['Button']['2']['Name'];
-    var button3String = "";
+    var button1String;
+    var button2String;
+    var button3String;
+    if ((gameDetailsList[gamePicked].play.playModes['Button']['1']['Type']).compareTo("Static")==0){
+      button1String = gameDetailsList[gamePicked].play.playModes['Button']['1']['Name'];
+      button2String = gameDetailsList[gamePicked].play.playModes['Button']['2']['Name'];
+      button3String = "";
+    }
     if (gameDetailsList[gamePicked].play.playModes['Button']['3'] != null) {
       button3String = gameDetailsList[gamePicked].play.playModes['Button']['3']['Name'];
     }

@@ -24,11 +24,13 @@
                 },
                 "1":
                 {
-                    "Name": "Vowel"
+                    "Name": "Vowel",
+                    "Type":"Static"
                 },
                 "2":
                 {
-                    "Name": "Consonant"
+                    "Name": "Consonant",
+                    "Type":"Static"
                 },
                 "Hint1":
                 {
