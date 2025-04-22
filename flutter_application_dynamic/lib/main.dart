@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart' as wi;
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-
+import 'dart:developer' as developer;
 
 /* All game details loaded globaly when the app starts
  * This is done to avoid loading the game details multiple times when navigating between pages.
@@ -43,9 +43,11 @@ int hardStartFirstNumber = 0;
 int hardEndFirstNumber = 0;
 int hardStartSecondNumber = 0;
 int hardEndSecondNumber = 0;
-
+int maxCategories=0;
+var startendnumbers=[];
 /* The main function is the entry point of the Flutter application. */
 void main() {
+  print('Entering...');
   FlutterError.onError = (details) {
   FlutterError.presentError(details);
   if (kReleaseMode) exit(1);
@@ -62,7 +64,6 @@ class MyApp extends StatefulWidget {
   MyApp({required gameDetailsList});
   @override
   MyAppPageState createState() => MyAppPageState();
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -80,42 +81,57 @@ class MyApp extends StatefulWidget {
 }
   // Function to load the games list from games.json
  Future<List<Game>> loadGames() async {
+  print('3333 loadGames entered 111-10');
   String jsonString = await rootBundle.loadString('assets/games.json');
-  print('3333 $jsonString 44444');
+  print('3333 loadGames going to decode jsonString 111-20');
   Map<String, dynamic> decoded = jsonDecode(jsonString);
   List<dynamic> gamesList = decoded['games'];
-  print('3333 gamesList $gamesList 44444');
+  print('3333 loadGames got gamesList $gamesList 111-30');
 
   return gamesList.map((gameJson) => Game.fromJson(gameJson)).toList();
 }
 
  // Function to load game details from game.json
   Future<GameDetails> loadGameDetails(String gameDirectory) async {
+    print('3333 calling loadString for $gameDirectory 222-10');
     String jsonString = await rootBundle.loadString('assets/games/$gameDirectory/game.json');
+    //String jsonString = await rootBundle.loadString('assets/games/numbers/game.json');
+    //String jsonString = await rootBundle.loadString('assets/games/vowel-consonant/game.json');
+    print('3333 decoding jsonString 222-20');
+
     Map<String, dynamic> decoded = jsonDecode(jsonString);
-  print('3333 decoded $decoded 44444');
+    print('3333 decoded $decoded 222-30');
 
     return GameDetails.fromJson(decoded);
   }
   // Function to load all game details (for all games in the list)
   Future<List<GameDetails>> loadAllGameDetails() async {
+    print('3333 calling loadGames 333-10');
     List<Game> games = await loadGames();
+    print('3333 called loadGames 333-20');
     
     // Load the game details for each game in the list
     List<GameDetails> allGameDetails = [];
     for (var game in games) {
+      String dir_str = game.directory;
+      print('3333 loading game details for $game , directory $dir_str 333-30');
       GameDetails gameDetails = await loadGameDetails(game.directory);
+      print('3333 loaded game details for $game , directory $dir_str  333-40');
       allGameDetails.add(gameDetails);
+      print('3333 added game details for $game , directory $dir_str  333-50');
     }
     
     return allGameDetails;
   }
   void staticLoadGameDetails() {
+    print('3333 Inside staticLoadGameDetails 444-10');
     if (gameDetailsList.isEmpty) {
       // Use Future.delayed to call async functions after initState
       Future.delayed(Duration.zero, () async {
 
+        print('3333 Calling loadAllGameDetails 444-20');
         gameDetailsList = await loadAllGameDetails();
+        print('3333 Called loadAllGameDetails 444-30');
 
         //setState(() 
         {
@@ -140,6 +156,7 @@ class MyApp extends StatefulWidget {
           }
           currentFileName = '$currentDir/$currentFileNumber.jpg';
           maxNumber=gameDetailsList[gamePicked].play.playModes['TotalOptions'];
+          maxCategories=gameDetailsList[gamePicked].play.playModes['TotalCategories'];
           easyStartFirstNumber = gameDetailsList[gamePicked].play.playModes['Easy'][0]['StartNumber'];
           easyEndFirstNumber = gameDetailsList[gamePicked].play.playModes['Easy'][0]['EndNumber'];
           easyStartSecondNumber = gameDetailsList[gamePicked].play.playModes['Easy'][1]['StartNumber'];
@@ -148,6 +165,14 @@ class MyApp extends StatefulWidget {
           hardEndFirstNumber = gameDetailsList[gamePicked].play.playModes['Hard'][0]['EndNumber'];
           hardStartSecondNumber = gameDetailsList[gamePicked].play.playModes['Hard'][1]['StartNumber'];
           hardEndSecondNumber = gameDetailsList[gamePicked].play.playModes['Hard'][1]['EndNumber'];
+          for(int i=0;i<maxCategories;i++){
+            startendnumbers.add(gameDetailsList[gamePicked].play.playModes['Easy'][i]['StartNumber']);
+            startendnumbers.add(gameDetailsList[gamePicked].play.playModes['Easy'][i]['EndNumber']);
+          }
+          for(int i=0;i<maxCategories;i++){
+            startendnumbers.add(gameDetailsList[gamePicked].play.playModes['Hard'][i]['StartNumber']);
+            startendnumbers.add(gameDetailsList[gamePicked].play.playModes['Hard'][i]['EndNumber']);
+          }
         }
         //);
 
@@ -168,6 +193,7 @@ class MyAppPageState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    print('3333 Calling staticLoadGameDetails 555-10');
     staticLoadGameDetails();
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
@@ -186,7 +212,7 @@ class MyAppPageState extends State<MyApp> {
 class MyAppState extends ChangeNotifier {
   //int questionCount = 10;  // Default question count
   late int correctAnswers;  // Total correct answers, now dynamic
-  var randoom = Random().nextInt(49) + 1;
+  var randoom = Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1;
   late var current = randoom.toString();
   late List<String> allQuestionsList;
   //late List<String> correct;  // Updated dynamically with question count
@@ -199,8 +225,6 @@ class MyAppState extends ChangeNotifier {
   bool hint2 = false;
   //static var allGamesData;
   MyAppState();
-
-
   // Set the number of questions and adjust related properties
   void setQuestionCount(int count) {
     defaultQuestionCount = count;
@@ -259,8 +283,8 @@ class MyAppState extends ChangeNotifier {
       numb = allQuestionsList.indexOf(current) + 1;
       hint1= false;
       hint2= false;
-      notifyListeners();
     }
+    notifyListeners();
   hint2 = false;
   }
 
@@ -316,8 +340,9 @@ class MyAppState extends ChangeNotifier {
 
   static Future<void> readJson() async {
     final String response = await rootBundle.loadString('assets/games.json');
-    print('4444 readJson $response 555555');
+    print('3333 readJson $response 777-10');
     final data = await json.decode(response);
+    print('3333 readJson $response 777-20');
     //allGamesData = data; 
     print(data);
   }
@@ -791,7 +816,9 @@ class SetQuestionCountPageState extends State<SetQuestionCountPage> {
   @override
   void initState() {
    super.initState();
+   print('3333 Calling staticLoadGameDetails 888-10');
    staticLoadGameDetails();
+   print('3333 Called staticLoadGameDetails 888-20');
   }
 
   @override
@@ -799,7 +826,9 @@ class SetQuestionCountPageState extends State<SetQuestionCountPage> {
     final theme = Theme.of(context);
     wi.Size size = wi.Size(256.0,96.0);
     var appState = context.watch<MyAppState>();
+    print('3333 Calling staticLoadGameDetails 999-10');
     staticLoadGameDetails();
+    print('3333 Called staticLoadGameDetails 999-10');
     return Scaffold(
       appBar: AppBar(title: Text('Set Number of Questions')),
       body: Container(
@@ -1084,29 +1113,69 @@ class GeneratorPage extends StatefulWidget {
   GeneratorPageState createState() => GeneratorPageState();  
 }
 
+// Game page where users provide their answers
 class GeneratorPageState extends State<GeneratorPage> {
   GeneratorPageState();
 
   @override
   void initState() {
    super.initState();
+   print('3333 Calling staticLoadGameDetails AAA-10');
    staticLoadGameDetails();
+   print('3333 Called staticLoadGameDetails AAA-10');
   }
 
+  // Builds the widget the user sees on the screen
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
-    var button1String;
-    var button2String;
-    var button3String;
-    if ((gameDetailsList[gamePicked].play.playModes['Button']['1']['Type']).compareTo("Static")==0){
+    var button1String = "";
+    var button2String = "";
+    var button3String = "";
+    int buttons=2;
+    if ((gameDetailsList[gamePicked].play.playModes['Button']['1']['Type']).compareTo("Static")==0) {
       button1String = gameDetailsList[gamePicked].play.playModes['Button']['1']['Name'];
       button2String = gameDetailsList[gamePicked].play.playModes['Button']['2']['Name'];
-      button3String = "";
+      if (gameDetailsList[gamePicked].play.playModes['Button']['3'] != null) {
+        button3String = gameDetailsList[gamePicked].play.playModes['Button']['3']['Name'];
+      }
     }
-    if (gameDetailsList[gamePicked].play.playModes['Button']['3'] != null) {
-      button3String = gameDetailsList[gamePicked].play.playModes['Button']['3']['Name'];
+    else if((gameDetailsList[gamePicked].play.playModes['Button']['1']['Type']).compareTo("Random")==0) {
+      int cur=appState.randoom-1;
+      button1String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
+      button2String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
+      if (gameDetailsList[gamePicked].play.playModes['Button']['3'] != null) {
+        buttons=3;
+        button3String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
+        do {
+        button3String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
+        } while (button3String.compareTo(cur.toString())==0);
+      }
+      do {
+        button1String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
+      } while (button1String.compareTo(cur.toString())==0);
+      do {
+        button2String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
+      } while (button2String.compareTo(cur.toString())==0);
+      var corr=Random().nextInt(buttons);
+      if (corr==0){
+        button1String=cur.toString();
+      }
+      if (corr==1){
+        button2String=cur.toString();
+      }
+      if (corr==2){
+        button3String=cur.toString();
+      }
+      print("a");
+      print(button1String);
+      print("b");
+      print(button2String);
+      print("c");
+      print(button3String);
+      print("d");
+      print(cur.toString());
     }
     var hint1String = gameDetailsList[gamePicked].play.playModes['Button']['Hint1']['Name'];
 
@@ -1241,7 +1310,7 @@ class GeneratorPageState extends State<GeneratorPage> {
 
 class BigCard extends StatelessWidget {
   
-  
+  // get image used for a question/answer
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
@@ -1252,7 +1321,7 @@ class BigCard extends StatelessWidget {
     );
     int currentNumber = int.parse(current);
     var directory = "";
-    if (currentNumber >= easyStartFirstNumber && currentNumber <= easyEndFirstNumber) {
+    /* if (currentNumber >= easyStartFirstNumber && currentNumber <= easyEndFirstNumber) {
       directory = gameDetailsList[gamePicked].play.playModes['Easy'][0]['Directory'];
       return Image.asset('$directory/$current.jpg');
     } else if (currentNumber >= easyStartSecondNumber && currentNumber <= easyEndSecondNumber) {
@@ -1267,7 +1336,27 @@ class BigCard extends StatelessWidget {
     }
     else {
       return Image.asset('assets/images/blueright.jpg');
-    }
+    } */
+   print("num");
+   print(maxCategories);
+   print(currentNumber);
+   print(startendnumbers);
+   for(int i=0;i<maxCategories;i++){
+      if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
+        directory = gameDetailsList[gamePicked].play.playModes['Easy'][i]['Directory'];
+        return Image.asset('$directory/$current.jpg');
+      }
+   }
+   for(int i=maxCategories;i<2*maxCategories;i++){
+    print("inside");
+    print(startendnumbers[2*i]);
+    print(startendnumbers[2*i+1]);
+      if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
+        directory = gameDetailsList[gamePicked].play.playModes['Hard'][i-maxCategories]['Directory'];
+        return Image.asset('$directory/$current.jpg');
+      }
+   }
+   return Image.asset('assets/images/blueright.jpg');
   }
 }
 
@@ -1295,7 +1384,7 @@ class Hint1Card extends StatelessWidget {
       color: theme.colorScheme.onPrimary,
     );
     var hint1Directory = "";
-    //get all easy value
+    /* //get all easy value
     int minStartFirstNumber = gameDetailsList[gamePicked].play.playModes['Easy'][0]['StartNumber'];
     int minEndFirstNumber = gameDetailsList[gamePicked].play.playModes['Easy'][0]['EndNumber'];
     int minStartSecondNumber = gameDetailsList[gamePicked].play.playModes['Easy'][1]['StartNumber'];
@@ -1323,7 +1412,24 @@ class Hint1Card extends StatelessWidget {
         hint1Directory = gameDetailsList[gamePicked].play.playModes['Easy'][1]['Hint1Directory'];
       }
     }
-
+ */
+    print("num");
+    print(maxCategories);
+    print(current);
+    print(startendnumbers);
+    for(int i=0;i<maxCategories;i++){
+        if (current >= startendnumbers[2*i] && current <= startendnumbers[2*i+1]) {
+          hint1Directory = gameDetailsList[gamePicked].play.playModes['Easy'][i]['Hint1Directory'];
+        }
+    }
+    for(int i=maxCategories;i<2*maxCategories;i++){
+      print("inside");
+      print(startendnumbers[2*i]);
+      print(startendnumbers[2*i+1]);
+        if (current >= startendnumbers[2*i] && current <= startendnumbers[2*i+1]) {
+          hint1Directory = gameDetailsList[gamePicked].play.playModes['Hard'][i-maxCategories]['Hint1Directory'];
+        }
+    }
     if (appState.hint1==true){
       // reset it to false so go back works
       //appState.hint1 = false;
@@ -1372,7 +1478,8 @@ void _playAudio(String audioString) async {
       color: theme.colorScheme.onPrimary);
     var currentstr = appState.current;
     int current = int.parse(appState.current);
-    var hint2Directory = "";
+    var ans="";
+    /* var hint2Directory = "";
     //get all easy value
     int minStartFirstNumber = gameDetailsList[gamePicked].play.playModes['Easy'][0]['StartNumber'];
     int minEndFirstNumber = gameDetailsList[gamePicked].play.playModes['Easy'][0]['EndNumber'];
@@ -1412,7 +1519,28 @@ void _playAudio(String audioString) async {
       //reset to false so go back works
       //appState.hint2 = false;
       return Text('');
-    //}
+    //} */
+    print("num");
+    print(maxCategories);
+    print(current);
+    print(startendnumbers);
+    for(int i=0;i<maxCategories;i++){
+        if (current >= startendnumbers[2*i] && current <= startendnumbers[2*i+1]) {
+          ans = gameDetailsList[gamePicked].play.playModes['Easy'][i]['Hint2Directory'];
+        }
+    }
+    for(int i=maxCategories;i<2*maxCategories;i++){
+      print("inside");
+      print(startendnumbers[2*i]);
+      print(startendnumbers[2*i+1]);
+        if (current >= startendnumbers[2*i] && current <= startendnumbers[2*i+1]) {
+          ans = gameDetailsList[gamePicked].play.playModes['Hard'][i-maxCategories]['Hint2Directory'];
+        }
+    }
+    if (appState.hint2==true) {
+      _playAudio('$ans/H$current.m4a');
+    }
+    return Text('');
   }
 }
 

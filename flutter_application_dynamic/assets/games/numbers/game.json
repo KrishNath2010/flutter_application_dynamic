@@ -1,0 +1,759 @@
+{
+    "Name": "Welcome to the Hindi Numbers application",
+    "Description": "Identify numbers in Hindi",
+    "Play": 
+    {
+        "Number of questions": 
+        {
+            "DefaultQuestionCount": 5,
+            "QuestionText": "How many questions do you want?",
+            "QuestionHint": "Enter #questions from 3 to 10, default question count = 5",
+            "ValidationRangeMin": 3,
+            "ValidationRangeMax": 10
+        },
+        "HardMode": "Yes",
+        "PlayModes": 
+        {
+            "GameType": "Button-Click",
+            "TotalOptions": 20,
+            "TotalCategories": 10,
+            "Button": 
+            {
+                "Back": 
+                {
+                    "Name": "Back"
+                },
+                "1":
+                {
+                    "Name": "Vowel",
+                    "Type":"Random"
+                },
+                "2":
+                {
+                    "Name": "Consonant",
+                    "Type":"Random"
+                },
+                "Hint1":
+                {
+                    "Type": "Image",
+                    "Name": "Hint1"
+                },
+                "Hint2":
+                {
+                    "Type": "Audio",
+                    "Name": "Hint2"
+                }
+            },
+            "Easy": 
+            [
+                {
+                    "Name": "0",
+                    "Directory": "assets/games/numbers/easy/0/Normal",
+                    "Hint1Directory": "assets/games/numbers/easy/0/Hint1",
+                    "Hint2Directory": "assets/games/numbers/easy/0/Hint2",
+                    "StartNumber": 1,
+                    "EndNumber": 1,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "1",
+                    "Directory": "assets/games/numbers/easy/1/Normal",
+                    "Hint1Directory": "assets/games/numbers/easy/1/Hint1",
+                    "Hint2Directory": "assets/games/numbers/easy/1/Hint2",
+                    "StartNumber": 2,
+                    "EndNumber": 2,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "2",
+                    "Directory": "assets/games/numbers/easy/2/Normal",
+                    "Hint1Directory": "assets/games/numbers/easy/2/Hint1",
+                    "Hint2Directory": "assets/games/numbers/easy/2/Hint2",
+                    "StartNumber": 3,
+                    "EndNumber": 3,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "3",
+                    "Directory": "assets/games/numbers/easy/3/Normal",
+                    "Hint1Directory": "assets/games/numbers/easy/3/Hint1",
+                    "Hint2Directory": "assets/games/numbers/easy/3/Hint2",
+                    "StartNumber": 4,
+                    "EndNumber": 4,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "4",
+                    "Directory": "assets/games/numbers/easy/4/Normal",
+                    "Hint1Directory": "assets/games/numbers/easy/4/Hint1",
+                    "Hint2Directory": "assets/games/numbers/easy/4/Hint2",
+                    "StartNumber": 5,
+                    "EndNumber": 5,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "5",
+                    "Directory": "assets/games/numbers/easy/5/Normal",
+                    "Hint1Directory": "assets/games/numbers/easy/5/Hint1",
+                    "Hint2Directory": "assets/games/numbers/easy/5/Hint2",
+                    "StartNumber": 6,
+                    "EndNumber": 6,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "6",
+                    "Directory": "assets/games/numbers/easy/6/Normal",
+                    "Hint1Directory": "assets/games/numbers/easy/6/Hint1",
+                    "Hint2Directory": "assets/games/numbers/easy/6/Hint2",
+                    "StartNumber": 7,
+                    "EndNumber": 7,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "7",
+                    "Directory": "assets/games/numbers/easy/7/Normal",
+                    "Hint1Directory": "assets/games/numbers/easy/7/Hint1",
+                    "Hint2Directory": "assets/games/numbers/easy/7/Hint2",
+                    "StartNumber": 8,
+                    "EndNumber": 8,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "8",
+                    "Directory": "assets/games/numbers/easy/8/Normal",
+                    "Hint1Directory": "assets/games/numbers/easy/8/Hint1",
+                    "Hint2Directory": "assets/games/numbers/easy/8/Hint2",
+                    "StartNumber": 9,
+                    "EndNumber": 9,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "9",
+                    "Directory": "assets/games/numbers/easy/9/Normal",
+                    "Hint1Directory": "assets/games/numbers/easy/9/Hint1",
+                    "Hint2Directory": "assets/games/numbers/easy/9/Hint2",
+                    "StartNumber": 10,
+                    "EndNumber": 10,
+                    "height": 300,
+                    "width": 300
+                }
+            ],
+            "Hard": 
+            [
+                {
+                    "Name": "10",
+                    "Directory": "assets/games/numbers/hard/10/Normal",
+                    "Hint1Directory": "assets/games/numbers/hard/10/Hint1",
+                    "Hint2Directory": "assets/games/numbers/hard/10/Hint2",
+                    "StartNumber": 11,
+                    "EndNumber": 11,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "11",
+                    "Directory": "assets/games/numbers/hard/11/Normal",
+                    "Hint1Directory": "assets/games/numbers/hard/11/Hint1",
+                    "Hint2Directory": "assets/games/numbers/hard/11/Hint2",
+                    "StartNumber": 12,
+                    "EndNumber": 12,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "12",
+                    "Directory": "assets/games/numbers/hard/Vowel/Normal",
+                    "Hint1Directory": "assets/games/numbers/hard/Vowel/Hint1",
+                    "Hint2Directory": "assets/games/numbers/hard/Vowel/Hint2",
+                    "StartNumber": 13,
+                    "EndNumber": 13,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "13",
+                    "Directory": "assets/games/numbers/hard/Vowel/Normal",
+                    "Hint1Directory": "assets/games/numbers/hard/Vowel/Hint1",
+                    "Hint2Directory": "assets/games/numbers/hard/Vowel/Hint2",
+                    "StartNumber": 14,
+                    "EndNumber": 14,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "14",
+                    "Directory": "assets/games/numbers/hard/Vowel/Normal",
+                    "Hint1Directory": "assets/games/numbers/hard/Vowel/Hint1",
+                    "Hint2Directory": "assets/games/numbers/hard/Vowel/Hint2",
+                    "StartNumber": 15,
+                    "EndNumber": 15,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "15",
+                    "Directory": "assets/games/numbers/hard/Vowel/Normal",
+                    "Hint1Directory": "assets/games/numbers/hard/Vowel/Hint1",
+                    "Hint2Directory": "assets/games/numbers/hard/Vowel/Hint2",
+                    "StartNumber": 16,
+                    "EndNumber": 16,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "16",
+                    "Directory": "assets/games/numbers/hard/Vowel/Normal",
+                    "Hint1Directory": "assets/games/numbers/hard/Vowel/Hint1",
+                    "Hint2Directory": "assets/games/numbers/hard/Vowel/Hint2",
+                    "StartNumber": 17,
+                    "EndNumber": 17,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "17",
+                    "Directory": "assets/games/numbers/hard/Vowel/Normal",
+                    "Hint1Directory": "assets/games/numbers/hard/Vowel/Hint1",
+                    "Hint2Directory": "assets/games/numbers/hard/Vowel/Hint2",
+                    "StartNumber": 18,
+                    "EndNumber": 18,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "18",
+                    "Directory": "assets/games/numbers/hard/Vowel/Normal",
+                    "Hint1Directory": "assets/games/numbers/hard/Vowel/Hint1",
+                    "Hint2Directory": "assets/games/numbers/hard/Vowel/Hint2",
+                    "StartNumber": 19,
+                    "EndNumber": 19,
+                    "height": 300,
+                    "width": 300
+                },
+                {
+                    "Name": "19",
+                    "Directory": "assets/games/numbers/hard/Vowel/Normal",
+                    "Hint1Directory": "assets/games/numbers/hard/Vowel/Hint1",
+                    "Hint2Directory": "assets/games/numbers/hard/Vowel/Hint2",
+                    "StartNumber": 20,
+                    "EndNumber": 20,
+                    "height": 300,
+                    "width": 300
+                }
+            ]                
+        }
+    },
+    "Learn": 
+    {
+        "GameType": "Button-Click",
+        "Button": 
+        {
+            "Back": 
+            {
+                "Name": "Previous"
+            },
+            "Next":
+            {
+                "Name": "Next"
+            }
+        },    
+        "Normal": 
+        [
+            {
+                "Name": "0",
+                "Directory": "assets/games/numbers/easy/0/Normal",
+                "StartNumber": 1,
+                "EndNumber": 1,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "1",
+                "Directory": "assets/games/numbers/easy/1/Normal",
+                "StartNumber": 2,
+                "EndNumber": 2,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "2",
+                "Directory": "assets/games/numbers/easy/2/Normal",
+                "StartNumber": 3,
+                "EndNumber": 3,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "3",
+                "Directory": "assets/games/numbers/easy/3/Normal",
+                "StartNumber": 4,
+                "EndNumber": 4,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "4",
+                "Directory": "assets/games/numbers/easy/4/Normal",
+                "StartNumber": 5,
+                "EndNumber": 5,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "5",
+                "Directory": "assets/games/numbers/easy/5/Normal",
+                "StartNumber": 6,
+                "EndNumber": 6,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "6",
+                "Directory": "assets/games/numbers/easy/6/Normal",
+                "StartNumber": 7,
+                "EndNumber": 7,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "7",
+                "Directory": "assets/games/numbers/easy/7/Normal",
+                "StartNumber": 8,
+                "EndNumber": 8,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "8",
+                "Directory": "assets/games/numbers/easy/8/Normal",
+                "StartNumber": 9,
+                "EndNumber": 9,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "9",
+                "Directory": "assets/games/numbers/easy/9/Normal",
+                "StartNumber": 10,
+                "EndNumber": 10,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "10",
+                "Directory": "assets/games/numbers/hard/10/Normal",
+                "StartNumber": 11,
+                "EndNumber": 11,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "11",
+                "Directory": "assets/games/numbers/hard/11/Normal",
+                "StartNumber": 12,
+                "EndNumber": 12,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "12",
+                "Directory": "assets/games/numbers/hard/12/Normal",
+                "StartNumber": 13,
+                "EndNumber": 13,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "13",
+                "Directory": "assets/games/numbers/hard/13/Normal",
+                "StartNumber": 14,
+                "EndNumber": 14,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "14",
+                "Directory": "assets/games/numbers/hard/14/Normal",
+                "StartNumber": 15,
+                "EndNumber": 15,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "15",
+                "Directory": "assets/games/numbers/hard/15/Normal",
+                "StartNumber": 16,
+                "EndNumber": 16,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "16",
+                "Directory": "assets/games/numbers/hard/16/Normal",
+                "StartNumber": 17,
+                "EndNumber": 17,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "17",
+                "Directory": "assets/games/numbers/hard/17/Normal",
+                "StartNumber": 18,
+                "EndNumber": 18,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "18",
+                "Directory": "assets/games/numbers/hard/18/Normal",
+                "StartNumber": 19,
+                "EndNumber": 19,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "19",
+                "Directory": "assets/games/numbers/hard/19/Normal",
+                "StartNumber": 20,
+                "EndNumber": 20,
+                "height": 300,
+                "width": 300
+            }
+        ],    
+        "Hint1": 
+        [
+            {
+                "Name": "0",
+                "Directory": "assets/games/numbers/easy/0/Hint1",
+                "StartNumber": 1,
+                "EndNumber": 1,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "1",
+                "Directory": "assets/games/numbers/easy/1/Hint1",
+                "StartNumber": 2,
+                "EndNumber": 2,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "2",
+                "Directory": "assets/games/numbers/easy/2/Hint1",
+                "StartNumber": 3,
+                "EndNumber": 3,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "3",
+                "Directory": "assets/games/numbers/easy/3/Hint1",
+                "StartNumber": 4,
+                "EndNumber": 4,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "4",
+                "Directory": "assets/games/numbers/easy/4/Hint1",
+                "StartNumber": 5,
+                "EndNumber": 5,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "5",
+                "Directory": "assets/games/numbers/easy/5/Hint1",
+                "StartNumber": 6,
+                "EndNumber": 6,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "6",
+                "Directory": "assets/games/numbers/easy/6/Hint1",
+                "StartNumber": 7,
+                "EndNumber": 7,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "7",
+                "Directory": "assets/games/numbers/easy/7/Hint1",
+                "StartNumber": 8,
+                "EndNumber": 8,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "8",
+                "Directory": "assets/games/numbers/easy/8/Hint1",
+                "StartNumber": 9,
+                "EndNumber": 9,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "9",
+                "Directory": "assets/games/numbers/easy/9/Hint1",
+                "StartNumber": 10,
+                "EndNumber": 10,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "10",
+                "Directory": "assets/games/numbers/hard/10/Hint1",
+                "StartNumber": 11,
+                "EndNumber": 11,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "11",
+                "Directory": "assets/games/numbers/hard/11/Hint1",
+                "StartNumber": 12,
+                "EndNumber": 12,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "12",
+                "Directory": "assets/games/numbers/hard/12/Hint1",
+                "StartNumber": 13,
+                "EndNumber": 13,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "13",
+                "Directory": "assets/games/numbers/hard/13/Hint1",
+                "StartNumber": 14,
+                "EndNumber": 14,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "14",
+                "Directory": "assets/games/numbers/hard/14/Hint1",
+                "StartNumber": 15,
+                "EndNumber": 15,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "15",
+                "Directory": "assets/games/numbers/hard/15/Hint1",
+                "StartNumber": 16,
+                "EndNumber": 16,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "16",
+                "Directory": "assets/games/numbers/hard/16/Hint1",
+                "StartNumber": 17,
+                "EndNumber": 17,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "17",
+                "Directory": "assets/games/numbers/hard/17/Hint1",
+                "StartNumber": 18,
+                "EndNumber": 18,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "18",
+                "Directory": "assets/games/numbers/hard/18/Hint1",
+                "StartNumber": 19,
+                "EndNumber": 19,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "19",
+                "Directory": "assets/games/numbers/hard/19/Hint1",
+                "StartNumber": 20,
+                "EndNumber": 20,
+                "height": 300,
+                "width": 300
+            }
+        ],
+        "Hint2": 
+        [
+            {
+                "Name": "0",
+                "Directory": "assets/games/numbers/easy/0/Hint2",
+                "StartNumber": 1,
+                "EndNumber": 1,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "1",
+                "Directory": "assets/games/numbers/easy/1/Hint2",
+                "StartNumber": 2,
+                "EndNumber": 2,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "2",
+                "Directory": "assets/games/numbers/easy/2/Hint2",
+                "StartNumber": 3,
+                "EndNumber": 3,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "3",
+                "Directory": "assets/games/numbers/easy/3/Hint2",
+                "StartNumber": 4,
+                "EndNumber": 4,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "4",
+                "Directory": "assets/games/numbers/easy/4/Hint2",
+                "StartNumber": 5,
+                "EndNumber": 5,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "5",
+                "Directory": "assets/games/numbers/easy/5/Hint2",
+                "StartNumber": 6,
+                "EndNumber": 6,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "6",
+                "Directory": "assets/games/numbers/easy/6/Hint2",
+                "StartNumber": 7,
+                "EndNumber": 7,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "7",
+                "Directory": "assets/games/numbers/easy/7/Hint2",
+                "StartNumber": 8,
+                "EndNumber": 8,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "8",
+                "Directory": "assets/games/numbers/easy/8/Hint2",
+                "StartNumber": 9,
+                "EndNumber": 9,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "9",
+                "Directory": "assets/games/numbers/easy/9/Hint2",
+                "StartNumber": 10,
+                "EndNumber": 10,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "10",
+                "Directory": "assets/games/numbers/hard/10/Hint2",
+                "StartNumber": 11,
+                "EndNumber": 11,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "11",
+                "Directory": "assets/games/numbers/hard/11/Hint2",
+                "StartNumber": 12,
+                "EndNumber": 12,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "12",
+                "Directory": "assets/games/numbers/hard/12/Hint2",
+                "StartNumber": 13,
+                "EndNumber": 13,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "13",
+                "Directory": "assets/games/numbers/hard/13/Hint2",
+                "StartNumber": 14,
+                "EndNumber": 14,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "14",
+                "Directory": "assets/games/numbers/hard/14/Hint2",
+                "StartNumber": 15,
+                "EndNumber": 15,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "15",
+                "Directory": "assets/games/numbers/hard/15/Hint2",
+                "StartNumber": 16,
+                "EndNumber": 16,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "16",
+                "Directory": "assets/games/numbers/hard/16/Hint2",
+                "StartNumber": 17,
+                "EndNumber": 17,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "17",
+                "Directory": "assets/games/numbers/hard/17/Hint2",
+                "StartNumber": 18,
+                "EndNumber": 18,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "18",
+                "Directory": "assets/games/numbers/hard/18/Hint2",
+                "StartNumber": 19,
+                "EndNumber": 19,
+                "height": 300,
+                "width": 300
+            },
+            {
+                "Name": "19",
+                "Directory": "assets/games/numbers/hard/19/Hint2",
+                "StartNumber": 20,
+                "EndNumber": 20,
+                "height": 300,
+                "width": 300
+            }
+        ]
+    }
+}

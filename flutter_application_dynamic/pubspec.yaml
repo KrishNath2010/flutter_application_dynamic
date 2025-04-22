@@ -27,11 +27,11 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/games/vowel-consonant/easy/Vowel/Hint2/
     - assets/images/blueright.jpg
     - assets/images/games.json
     - assets/images/
     - assets/
+    - assets/games/
     - assets/games/vowel-consonant/game.json 
     - assets/games/vowel-consonant/easy/
     - assets/games/vowel-consonant/easy/Vowel/
@@ -51,5 +51,65 @@ flutter:
     - assets/games/vowel-consonant/hard/Consonant/Hint1/
     - assets/games/vowel-consonant/hard/Vowel/Hint2/
     - assets/games/vowel-consonant/hard/Consonant/Hint2/
-    - assets/games/
+    - assets/games/numbers/
+    - assets/games/numbers/hard/10/Normal/
+    - assets/games/numbers/hard/10/Hint1/
+    - assets/games/numbers/hard/10/Hint2/
+    - assets/games/numbers/hard/11/Normal/
+    - assets/games/numbers/hard/11/Hint1/
+    - assets/games/numbers/hard/11/Hint2/
+    - assets/games/numbers/hard/12/Normal/
+    - assets/games/numbers/hard/12/Hint1/
+    - assets/games/numbers/hard/12/Hint2/
+    - assets/games/numbers/hard/13/Normal/
+    - assets/games/numbers/hard/13/Hint1/
+    - assets/games/numbers/hard/13/Hint2/
+    - assets/games/numbers/hard/14/Normal/
+    - assets/games/numbers/hard/14/Hint1/
+    - assets/games/numbers/hard/14/Hint2/
+    - assets/games/numbers/hard/15/Normal/
+    - assets/games/numbers/hard/15/Hint1/
+    - assets/games/numbers/hard/15/Hint2/
+    - assets/games/numbers/hard/16/Normal/
+    - assets/games/numbers/hard/16/Hint1/
+    - assets/games/numbers/hard/16/Hint2/
+    - assets/games/numbers/hard/17/Normal/
+    - assets/games/numbers/hard/17/Hint1/
+    - assets/games/numbers/hard/17/Hint2/
+    - assets/games/numbers/hard/18/Normal/
+    - assets/games/numbers/hard/18/Hint1/
+    - assets/games/numbers/hard/18/Hint2/
+    - assets/games/numbers/hard/19/Normal/
+    - assets/games/numbers/hard/19/Hint1/
+    - assets/games/numbers/hard/19/Hint2/
+    - assets/games/numbers/easy/0/Normal/
+    - assets/games/numbers/easy/0/Hint1/
+    - assets/games/numbers/easy/0/Hint2/
+    - assets/games/numbers/easy/1/Normal/
+    - assets/games/numbers/easy/1/Hint1/
+    - assets/games/numbers/easy/1/Hint2/
+    - assets/games/numbers/easy/2/Normal/
+    - assets/games/numbers/easy/2/Hint1/
+    - assets/games/numbers/easy/2/Hint2/
+    - assets/games/numbers/easy/3/Normal/
+    - assets/games/numbers/easy/3/Hint1/
+    - assets/games/numbers/easy/3/Hint2/
+    - assets/games/numbers/easy/4/Normal/
+    - assets/games/numbers/easy/4/Hint1/
+    - assets/games/numbers/easy/4/Hint2/
+    - assets/games/numbers/easy/5/Normal/
+    - assets/games/numbers/easy/5/Hint1/
+    - assets/games/numbers/easy/5/Hint2/
+    - assets/games/numbers/easy/6/Normal/
+    - assets/games/numbers/easy/6/Hint1/
+    - assets/games/numbers/easy/6/Hint2/
+    - assets/games/numbers/easy/7/Normal/
+    - assets/games/numbers/easy/7/Hint1/
+    - assets/games/numbers/easy/7/Hint2/
+    - assets/games/numbers/easy/8/Normal/
+    - assets/games/numbers/easy/8/Hint1/
+    - assets/games/numbers/easy/8/Hint2/
+    - assets/games/numbers/easy/9/Normal/
+    - assets/games/numbers/easy/9/Hint1/
+    - assets/games/numbers/easy/9/Hint2/
 
