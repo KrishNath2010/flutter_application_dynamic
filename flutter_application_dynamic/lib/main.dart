@@ -45,6 +45,9 @@ int hardStartSecondNumber = 0;
 int hardEndSecondNumber = 0;
 int maxCategories=0;
 var startendnumbers=[];
+var button1String = "";
+var button2String = "";
+var button3String = "";
 /* The main function is the entry point of the Flutter application. */
 void main() {
   print('Entering...');
@@ -223,6 +226,9 @@ class MyAppState extends ChangeNotifier {
   bool hard=false;
   bool hint1 = false;
   bool hint2 = false;
+  bool change=true;
+  var prevbutton=false;
+  var buttonstrs=[];
   //static var allGamesData;
   MyAppState();
   // Set the number of questions and adjust related properties
@@ -238,11 +244,13 @@ class MyAppState extends ChangeNotifier {
 
   void setHint1() {
     hint1= true;
+    change=false;
     notifyListeners();
   }
 
  void setHint2() {
   hint2 = true;
+  change=false;
   notifyListeners();
 }
   void getNext() {
@@ -250,12 +258,14 @@ class MyAppState extends ChangeNotifier {
     int minEndFirstNumber = gameDetailsList[gamePicked].play.playModes['Easy'][0]['EndNumber'];
     int minStartSecondNumber = gameDetailsList[gamePicked].play.playModes['Easy'][1]['StartNumber'];
     int minEndSecondNumber = gameDetailsList[gamePicked].play.playModes['Easy'][1]['EndNumber'];*/
+    change=true;
     if (allQuestionsList.length==defaultQuestionCount){
       done=true;
     }
     if (!done) {
       if (allQuestionsList.indexOf(current) < allQuestionsList.length - 1) {
         current = allQuestionsList[allQuestionsList.indexOf(current) + 1];
+        prevbutton=true;
       } else {
         int counter = 0;
         if(hard){
@@ -279,6 +289,7 @@ class MyAppState extends ChangeNotifier {
           current = "end";
           done = true;
         }
+        prevbutton=false;
       }
       numb = allQuestionsList.indexOf(current) + 1;
       hint1= false;
@@ -293,6 +304,7 @@ class MyAppState extends ChangeNotifier {
       current = allQuestionsList[allQuestionsList.indexOf(current) - 1];
       numb = allQuestionsList.indexOf(current) + 1;
       hint1=hint2=false;
+      prevbutton=true;
       notifyListeners();
     }
   }
@@ -1130,52 +1142,85 @@ class GeneratorPageState extends State<GeneratorPage> {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
-    var button1String = "";
-    var button2String = "";
-    var button3String = "";
-    int buttons=2;
-    if ((gameDetailsList[gamePicked].play.playModes['Button']['1']['Type']).compareTo("Static")==0) {
-      button1String = gameDetailsList[gamePicked].play.playModes['Button']['1']['Name'];
-      button2String = gameDetailsList[gamePicked].play.playModes['Button']['2']['Name'];
-      if (gameDetailsList[gamePicked].play.playModes['Button']['3'] != null) {
-        button3String = gameDetailsList[gamePicked].play.playModes['Button']['3']['Name'];
+    if (appState.change==true){
+      button1String = "";
+      button2String = "";
+      button3String = "";
+      int buttons=2;
+      if (appState.prevbutton==false){
+        if ((gameDetailsList[gamePicked].play.playModes['Button']['1']['Type']).compareTo("Static")==0) {
+          button1String = gameDetailsList[gamePicked].play.playModes['Button']['1']['Name'];
+          button2String = gameDetailsList[gamePicked].play.playModes['Button']['2']['Name'];
+          if (gameDetailsList[gamePicked].play.playModes['Button']['3'] != null) {
+            button3String = gameDetailsList[gamePicked].play.playModes['Button']['3']['Name'];
+          }
+          appState.buttonstrs.add([button1String,button2String]);
+        }
+        else if((gameDetailsList[gamePicked].play.playModes['Button']['1']['Type']).compareTo("Random")==0) {
+          int cur=appState.randoom-1;
+          button1String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
+          button2String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
+          if (gameDetailsList[gamePicked].play.playModes['Button']['3'] != null) {
+            buttons=3;
+            button3String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
+            do {
+            button3String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
+            } while (button3String.compareTo(cur.toString())==0);
+          }
+          do {
+            button1String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
+          } while (button1String.compareTo(cur.toString())==0);
+          do {
+            button2String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
+          } while (button2String.compareTo(cur.toString())==0);
+          var corr=Random().nextInt(buttons);
+          if (corr==0){
+            button1String=cur.toString();
+          }
+          if (corr==1){
+            button2String=cur.toString();
+          }
+          if (corr==2){
+            button3String=cur.toString();
+          }
+          appState.buttonstrs.add([button1String,button2String]);
+          print("a");
+          print(button1String);
+          print("b");
+          print(button2String);
+          print("c");
+          print(button3String);
+          print("d");
+          print(cur.toString());
+        }
       }
-    }
-    else if((gameDetailsList[gamePicked].play.playModes['Button']['1']['Type']).compareTo("Random")==0) {
-      int cur=appState.randoom-1;
-      button1String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
-      button2String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
-      if (gameDetailsList[gamePicked].play.playModes['Button']['3'] != null) {
-        buttons=3;
-        button3String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
-        do {
-        button3String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
-        } while (button3String.compareTo(cur.toString())==0);
+      else{
+        if ((gameDetailsList[gamePicked].play.playModes['Button']['1']['Type']).compareTo("Static")!=0){
+          print("something");
+          print(appState.current);
+          print(appState.buttonstrs);
+          var ind=0;
+          for(int i=0;i<appState.buttonstrs.length;i++){
+            for(int j=0;j<(((appState.buttonstrs)[i]).length);j++){
+              print((int.parse(((appState.buttonstrs)[i])[j])));
+              print(int.parse(appState.current));
+              if(((int.parse(((appState.buttonstrs)[i])[j]))+1)==int.parse(appState.current)){
+                print("in");
+                ind=i;
+                print("out");
+              }
+            }
+          }
+          button1String=(appState.buttonstrs[ind])[0];
+          button2String=(appState.buttonstrs[ind])[1];
+          //button3String=(appState.buttonstrs[ind])[2];
+        }
+        else{
+          button1String=(appState.buttonstrs[0])[0];
+          button2String=(appState.buttonstrs[0])[1];
+          //button3String=(appState.buttonstrs[0])[2];
+        }
       }
-      do {
-        button1String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
-      } while (button1String.compareTo(cur.toString())==0);
-      do {
-        button2String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
-      } while (button2String.compareTo(cur.toString())==0);
-      var corr=Random().nextInt(buttons);
-      if (corr==0){
-        button1String=cur.toString();
-      }
-      if (corr==1){
-        button2String=cur.toString();
-      }
-      if (corr==2){
-        button3String=cur.toString();
-      }
-      print("a");
-      print(button1String);
-      print("b");
-      print(button2String);
-      print("c");
-      print(button3String);
-      print("d");
-      print(cur.toString());
     }
     var hint1String = gameDetailsList[gamePicked].play.playModes['Button']['Hint1']['Name'];
 
