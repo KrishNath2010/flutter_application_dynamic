@@ -229,6 +229,7 @@ class MyAppState extends ChangeNotifier {
   bool change=true;
   var prevbutton=false;
   var buttonstrs=[];
+  var inanswered=[];
   //static var allGamesData;
   MyAppState();
   // Set the number of questions and adjust related properties
@@ -316,21 +317,63 @@ class MyAppState extends ChangeNotifier {
     }
   }
   void Button2Click() {
-    if (button1Clicked.contains(current)) {
+    /* if (button1Clicked.contains(current)) {
       button1Clicked.remove(current);
     } 
     if (!button2Clicked.contains(current)) {
       button2Clicked.add(current);
+    } */
+    var options=buttonstrs[buttonstrs.length-1];
+    var currentNumber=int.parse(current);
+    var directory="";
+    for(int i=0;i<maxCategories;i++){
+      if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
+        directory = gameDetailsList[gamePicked].play.playModes['Easy'][i]['Name'];
+      }
     }
+    for(int i=maxCategories;i<2*maxCategories;i++){
+    print("inside");
+    print(startendnumbers[2*i]);
+    print(startendnumbers[2*i+1]);
+      if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
+        directory = gameDetailsList[gamePicked].play.playModes['Hard'][i-maxCategories]['Name'];
+      }
+    }
+    if (options[1].compareTo(directory)!=0){
+      inanswered.add([options[1],directory,currentNumber]);
+    }
+    print("22245");
+    print(inanswered);
     notifyListeners();
   }
   void Button1Click() {
-    if (!button1Clicked.contains(current)) {
+    /* if (!button1Clicked.contains(current)) {
       button1Clicked.add(current);
     }
     if (button2Clicked.contains(current)) {
       button2Clicked.remove(current);
-    } 
+    } */ 
+    var options=buttonstrs[buttonstrs.length-1];
+    var currentNumber=int.parse(current);
+    var directory="";
+    for(int i=0;i<maxCategories;i++){
+      if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
+        directory = gameDetailsList[gamePicked].play.playModes['Easy'][i]['Name'];
+      }
+    }
+    for(int i=maxCategories;i<2*maxCategories;i++){
+    print("inside");
+    print(startendnumbers[2*i]);
+    print(startendnumbers[2*i+1]);
+      if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
+        directory = gameDetailsList[gamePicked].play.playModes['Hard'][i-maxCategories]['Name'];
+      }
+    }
+    if (options[0].compareTo(directory)!=0){
+      inanswered.add([options[0],directory,currentNumber]);
+    }
+    print("22245");
+    print(inanswered);
     notifyListeners();
   }
   void Restart(end) {
@@ -344,6 +387,8 @@ class MyAppState extends ChangeNotifier {
     button2Clicked.clear();
     hint1=false;
     hint2=false;
+    buttonstrs=[];
+    inanswered=[];
     if (end==false){
       notifyListeners();
     }
@@ -1600,7 +1645,7 @@ class EndPage extends StatelessWidget {
       );
     }
     //appState.Restart();
-    var missing=<String>[];
+    /* var missing=<String>[];
     var cmissing=<String>[];
     for (var pair in appState.allQuestionsList){
         print(pair);
@@ -1612,9 +1657,9 @@ class EndPage extends StatelessWidget {
             cmissing.add(pair);
           }
         }
-    }
+    } */
 
-    var percent=(((appState.allQuestionsList.length-missing.length-cmissing.length)/appState.allQuestionsList.length)*100).ceil();
+    var percent=((1-((appState.inanswered.length)/appState.allQuestionsList.length))*100).ceil();
     //appState.Restart();
     /*return ListView(
       children: [
@@ -1634,7 +1679,7 @@ class EndPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'You got ${appState.allQuestionsList.length-missing.length-cmissing.length} questions right out of ${appState.allQuestionsList.length} questions.\n'
+          'You got ${appState.allQuestionsList.length-appState.inanswered.length} questions right out of ${appState.allQuestionsList.length} questions.\n'
           'You got $percent% of the answers right. Good Job!!',
           style: TextStyle(fontSize: 16), // Adjust font size if needed
           textAlign: TextAlign.center,
@@ -1705,10 +1750,10 @@ class EndPage extends StatelessWidget {
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
             ),
-            itemCount: missing.length + cmissing.length, // Total incorrect answers
+            itemCount: appState.inanswered.length, // Total incorrect answers
             itemBuilder: (context, index) {
-              String item;
-              String category;
+              //String item;
+              /* String category;
               String categorys;
               var button1String = gameDetailsList[gamePicked].play.playModes['Button']['1']['Name'];
               var button2String = gameDetailsList[gamePicked].play.playModes['Button']['2']['Name'];
@@ -1722,10 +1767,14 @@ class EndPage extends StatelessWidget {
                 item = cmissing[index - missing.length]; 
                 category = button2String;//"Consonant"; 
                 categorys = button1String;//"Vowel"; 
-              }
-              int currentNumber = int.parse(item);
+              } */
+              print("abs");
+              String Userans=(appState.inanswered[index][0]).toString();
+              String Corrans=(appState.inanswered[index][1]).toString();
+              print("bbs");
+              int currentNumber = appState.inanswered[index][2];
               var directory = "";
-              if (currentNumber >= easyStartFirstNumber && currentNumber <= easyEndFirstNumber) {
+              /* if (currentNumber >= easyStartFirstNumber && currentNumber <= easyEndFirstNumber) {
                 directory = gameDetailsList[gamePicked].play.playModes['Easy'][0]['Directory'];
               } else if (currentNumber >= easyStartSecondNumber && currentNumber <= easyEndSecondNumber) {
                 directory = gameDetailsList[gamePicked].play.playModes['Easy'][1]['Directory'];
@@ -1733,14 +1782,34 @@ class EndPage extends StatelessWidget {
                 directory = gameDetailsList[gamePicked].play.playModes['Hard'][0]['Directory'];
               } else if (currentNumber >= hardStartSecondNumber && currentNumber <= hardEndSecondNumber) {
                 directory = gameDetailsList[gamePicked].play.playModes['Hard'][1]['Directory'];
+              } */
+              print("num");
+              print(maxCategories);
+              print(currentNumber);
+              print(startendnumbers);
+              for(int i=0;i<maxCategories;i++){
+                  if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
+                    print(i);
+                    directory = gameDetailsList[gamePicked].play.playModes['Easy'][i]['Directory'];
+                  }
               }
+              for(int i=maxCategories;i<2*maxCategories;i++){
+                print("inside");
+                print(startendnumbers[2*i]);
+                print("s");
+                print(startendnumbers[2*i+1]);
+                if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
+                  directory = gameDetailsList[gamePicked].play.playModes['Hard'][i-maxCategories]['Directory'];
+                }
+              }
+              print("done");
               return Column(
                 children: [
                   Expanded(
-                    child: Image.asset('$directory/$item.jpg'), 
+                    child: Image.asset('$directory/$currentNumber.jpg'), 
                   ),
                   Text(
-                    "Correct Answer: $category \n""Your Answer: $categorys",
+                    "\nCorrect Answer: $Corrans \n""Your Answer: $Userans",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
