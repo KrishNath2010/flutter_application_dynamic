@@ -1,7 +1,7 @@
 {
     "games": 
     [
-        {        
+        {
             "Name": "numbers",
             "Directory": "numbers"
         }

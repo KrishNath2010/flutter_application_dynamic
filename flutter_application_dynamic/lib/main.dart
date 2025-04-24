@@ -48,6 +48,7 @@ var startendnumbers=[];
 var button1String = "";
 var button2String = "";
 var button3String = "";
+var hardli=[];
 /* The main function is the entry point of the Flutter application. */
 void main() {
   print('Entering...');
@@ -230,6 +231,7 @@ class MyAppState extends ChangeNotifier {
   var prevbutton=false;
   var buttonstrs=[];
   var inanswered=[];
+  var notpossible=false;
   //static var allGamesData;
   MyAppState();
   // Set the number of questions and adjust related properties
@@ -241,6 +243,17 @@ class MyAppState extends ChangeNotifier {
     done = false;
     button1Clicked.clear();
     Restart(false);
+    for(int i=maxCategories;i<maxCategories*2;i+=1){
+        int start=startendnumbers[2*i];
+        int end=startendnumbers[2*i+1];
+        print(startendnumbers);
+        print("9876 $start");
+        print("9876 $end");
+        for(int j=start;j<=end;j++){
+          hardli.add(j);
+        }
+      }
+      print("9876 $hardli");
   }
 
   void setHint1() {
@@ -264,10 +277,22 @@ class MyAppState extends ChangeNotifier {
       done=true;
     }
     if (!done) {
+      /* for(int i=maxCategories;i<maxCategories*2;i+=1){
+        int start=startendnumbers[2*i];
+        int end=startendnumbers[2*i+1];
+        print(startendnumbers);
+        print("9876 $start");
+        print("9876 $end");
+        for(int j=start;j<=end;j++){
+          hardli.add(j);
+        }
+      }
+      print("9876 $hardli"); */
       if (allQuestionsList.indexOf(current) < allQuestionsList.length - 1) {
         current = allQuestionsList[allQuestionsList.indexOf(current) + 1];
         prevbutton=true;
-      } else {
+      } 
+      else {
         int counter = 0;
         if(hard){
           do {
@@ -281,9 +306,17 @@ class MyAppState extends ChangeNotifier {
           randoom = Random().nextInt(maxNumber) + 1;
           current = randoom.toString();
           counter++;
-        } while ((allQuestionsList.contains(current)|| (hardStartFirstNumber<=randoom && randoom<=hardEndFirstNumber)||(hardStartSecondNumber<=randoom && randoom<=hardEndSecondNumber)) && counter <= defaultQuestionCount * 64);
+          notpossible=false;
+          for (var x in hardli){
+            if (x==randoom){
+              notpossible=true;
+              break;
+            }
+          }
+        //} while ((allQuestionsList.contains(current)||(hardStartFirstNumber<=randoom && randoom<=hardEndFirstNumber)||(hardStartSecondNumber<=randoom && randoom<=hardEndSecondNumber)) && counter <= defaultQuestionCount * 64);
+        } while ((allQuestionsList.contains(current)|| notpossible) && counter <= defaultQuestionCount * 64);
         }
-        if (counter <= defaultQuestionCount * maxNumber) {
+        if (counter <= defaultQuestionCount * 64) {
           allQuestionsList.add(current);
           print(allQuestionsList);
         } else {
@@ -1203,21 +1236,60 @@ class GeneratorPageState extends State<GeneratorPage> {
         }
         else if((gameDetailsList[gamePicked].play.playModes['Button']['1']['Type']).compareTo("Random")==0) {
           int cur=appState.randoom-1;
-          button1String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
-          button2String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
-          if (gameDetailsList[gamePicked].play.playModes['Button']['3'] != null) {
-            buttons=3;
-            button3String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
+          button1String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions'])).toString();
+          button2String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions'])).toString();
+          if (appState.hard){
+            if (gameDetailsList[gamePicked].play.playModes['Button']['3'] != null) {
+              buttons=3;
+              button3String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions'])).toString();
+              do {
+              button3String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions'])).toString();
+              } while (button3String.compareTo(cur.toString())==0);
+            }
             do {
-            button3String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
-            } while (button3String.compareTo(cur.toString())==0);
+              button1String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions'])).toString();
+            } while (button1String.compareTo(cur.toString())==0);
+            do {
+              button2String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions'])).toString();
+            } while (button2String.compareTo(cur.toString())==0);
           }
-          do {
-            button1String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
-          } while (button1String.compareTo(cur.toString())==0);
-          do {
-            button2String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions']) + 1).toString();
-          } while (button2String.compareTo(cur.toString())==0);
+          else{
+            var notpossible=false;
+            if (gameDetailsList[gamePicked].play.playModes['Button']['3'] != null) {
+              buttons=3;
+              button3String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions'])).toString();
+              do {
+              button3String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions'])).toString();
+              notpossible=false;
+              for (var x in hardli){
+                if (x==(int.parse(button3String)+1)){
+                  notpossible=true;
+                  break;
+                }
+              }
+              } while ((button3String.compareTo(cur.toString())==0)||notpossible);
+            }
+            do {
+              button1String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions'])).toString();
+              notpossible=false;
+              for (var x in hardli){
+                if (x==(int.parse(button1String)+1)){
+                  notpossible=true;
+                  break;
+                }
+              }
+            } while ((button1String.compareTo(cur.toString())==0)||notpossible);
+            do {
+              button2String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions'])).toString();
+              notpossible=false;
+              for (var x in hardli){
+                if (x==(int.parse(button2String)+1)){
+                  notpossible=true;
+                  break;
+                }
+              }
+            } while ((button2String.compareTo(cur.toString())==0)||notpossible);
+          }
           var corr=Random().nextInt(buttons);
           if (corr==0){
             button1String=cur.toString();
