@@ -33,6 +33,11 @@
                     "Name": "Consonant",
                     "Type":"Random"
                 },
+                "3":
+                {
+                    "Name": "None",
+                    "Type":"Random"
+                },
                 "Hint1":
                 {
                     "Type": "Image",

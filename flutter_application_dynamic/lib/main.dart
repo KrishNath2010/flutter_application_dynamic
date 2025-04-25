@@ -49,6 +49,7 @@ var button1String = "";
 var button2String = "";
 var button3String = "";
 var hardli=[];
+int buttons=0;
 /* The main function is the entry point of the Flutter application. */
 void main() {
   print('Entering...');
@@ -409,6 +410,36 @@ class MyAppState extends ChangeNotifier {
     print(inanswered);
     notifyListeners();
   }
+  void Button3Click() {
+    /* if (!button1Clicked.contains(current)) {
+      button1Clicked.add(current);
+    }
+    if (button2Clicked.contains(current)) {
+      button2Clicked.remove(current);
+    } */ 
+    var options=buttonstrs[buttonstrs.length-1];
+    var currentNumber=int.parse(current);
+    var directory="";
+    for(int i=0;i<maxCategories;i++){
+      if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
+        directory = gameDetailsList[gamePicked].play.playModes['Easy'][i]['Name'];
+      }
+    }
+    for(int i=maxCategories;i<2*maxCategories;i++){
+    print("inside");
+    print(startendnumbers[2*i]);
+    print(startendnumbers[2*i+1]);
+      if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
+        directory = gameDetailsList[gamePicked].play.playModes['Hard'][i-maxCategories]['Name'];
+      }
+    }
+    if (options[2].compareTo(directory)!=0){
+      inanswered.add([options[2],directory,currentNumber]);
+    }
+    print("22245");
+    print(inanswered);
+    notifyListeners();
+  }
   void Restart(end) {
     allQuestionsList.clear();
     randoom = Random().nextInt(defaultQuestionCount) + 1;
@@ -422,6 +453,9 @@ class MyAppState extends ChangeNotifier {
     hint2=false;
     buttonstrs=[];
     inanswered=[];
+    prevbutton=false;
+    buttonstrs=[];
+    change=true;
     if (end==false){
       notifyListeners();
     }
@@ -1224,7 +1258,7 @@ class GeneratorPageState extends State<GeneratorPage> {
       button1String = "";
       button2String = "";
       button3String = "";
-      int buttons=2;
+      buttons=2;
       if (appState.prevbutton==false){
         if ((gameDetailsList[gamePicked].play.playModes['Button']['1']['Type']).compareTo("Static")==0) {
           button1String = gameDetailsList[gamePicked].play.playModes['Button']['1']['Name'];
@@ -1278,7 +1312,7 @@ class GeneratorPageState extends State<GeneratorPage> {
                   break;
                 }
               }
-            } while ((button1String.compareTo(cur.toString())==0)||notpossible);
+            } while ((button1String.compareTo(cur.toString())==0)||notpossible||(button1String.compareTo(button3String.toString())==0));
             do {
               button2String = (Random().nextInt(gameDetailsList[gamePicked].play.playModes['TotalOptions'])).toString();
               notpossible=false;
@@ -1288,7 +1322,7 @@ class GeneratorPageState extends State<GeneratorPage> {
                   break;
                 }
               }
-            } while ((button2String.compareTo(cur.toString())==0)||notpossible);
+            } while ((button2String.compareTo(cur.toString())==0)||notpossible||(button2String.compareTo(button3String.toString())==0)||(button2String.compareTo(button1String.toString())==0));
           }
           var corr=Random().nextInt(buttons);
           if (corr==0){
@@ -1300,7 +1334,12 @@ class GeneratorPageState extends State<GeneratorPage> {
           if (corr==2){
             button3String=cur.toString();
           }
-          appState.buttonstrs.add([button1String,button2String]);
+          if (buttons==3){
+            appState.buttonstrs.add([button1String,button2String,button3String]);
+          }
+          else{
+            appState.buttonstrs.add([button1String,button2String]);
+          }
           print("a");
           print(button1String);
           print("b");
@@ -1312,6 +1351,9 @@ class GeneratorPageState extends State<GeneratorPage> {
         }
       }
       else{
+        if (gameDetailsList[gamePicked].play.playModes['Button']['3'] != null) {
+              buttons=3;
+        }
         if ((gameDetailsList[gamePicked].play.playModes['Button']['1']['Type']).compareTo("Static")!=0){
           print("something");
           print(appState.current);
@@ -1330,12 +1372,19 @@ class GeneratorPageState extends State<GeneratorPage> {
           }
           button1String=(appState.buttonstrs[ind])[0];
           button2String=(appState.buttonstrs[ind])[1];
-          //button3String=(appState.buttonstrs[ind])[2];
+          if (buttons==3){
+            button3String=(appState.buttonstrs[ind])[2];
+          }
+          else{
+            button3String="";
+          }
         }
         else{
           button1String=(appState.buttonstrs[0])[0];
           button2String=(appState.buttonstrs[0])[1];
-          //button3String=(appState.buttonstrs[0])[2];
+          if (buttons==3){
+            button3String=(appState.buttonstrs[0])[2];
+          }
         }
       }
     }
@@ -1351,87 +1400,173 @@ class GeneratorPageState extends State<GeneratorPage> {
     }
 
     if (appState.done==false){
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(padding: const EdgeInsets.all(8.0)),
-            Row(
-              children:[
-                Padding(padding: const EdgeInsets.all(8.0)),
-                SizedBox(width: 10),
-                if (appState.hint1==true) 
-                  Hint1Card()
-                else
-                  BlueCard(),
-                Padding(padding: const EdgeInsets.all(8.0)),
-                SizedBox(width: 10),
-                BigCard(),
-                Padding(padding: const EdgeInsets.all(8.0)),
-                SizedBox(width: 10),
-                Hint2Card()
-              ],
-            ),
-            SizedBox(height: 100),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
+      if (buttons==2){
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(padding: const EdgeInsets.all(8.0)),
+              Row(
+                children:[
+                  Padding(padding: const EdgeInsets.all(8.0)),
                   SizedBox(width: 10),
+                  if (appState.hint1==true) 
+                    Hint1Card()
+                  else
+                    BlueCard(),
+                  Padding(padding: const EdgeInsets.all(8.0)),
+                  SizedBox(width: 10),
+                  BigCard(),
+                  Padding(padding: const EdgeInsets.all(8.0)),
+                  SizedBox(width: 10),
+                  Hint2Card()
+                ],
+              ),
+              SizedBox(height: 100),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                    SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        appState.getPrev();
+                      },
+                      child: Text('Go Back'),
+                    ),
+                    /*ElevatedButton.icon(
+                      onPressed: () {
+                        appState.toggleGuess();
+                      },
+                      icon: Icon(icon),
+                      label: Text('Vowel'),
+                    ),*/
+                    SizedBox(width: 10),
+                    ElevatedButton(
+                    onPressed: () {
+                      appState.Button1Click();
+                      appState.getNext();
+                    },
+                    child: Text(button1String.toString()),
+                    ),
+                    SizedBox(width: 10),
+                    ElevatedButton(
+                    onPressed: () {
+                      appState.Button2Click();
+                      appState.getNext();
+                    },
+                    child: Text(button2String.toString()),
+                  ),
+                    SizedBox(width: 10),
+                    ElevatedButton(
+                    onPressed: () {
+                      appState.setHint1();
+                    },
+                    child: Text(hint1String.toString()),
+                  ),
+                    SizedBox(width: 10),
+                    ElevatedButton(
+                    onPressed: () {
+                      appState.setHint2();
+                    },
+                    child: Text(hint2String.toString()),
+                  ), 
+                  /*SizedBox(width: 5),
                   ElevatedButton(
                     onPressed: () {
-                      appState.getPrev();
+                      appState.getNext();
                     },
-                    child: Text('Go Back'),
-                  ),
-                  /*ElevatedButton.icon(
-                    onPressed: () {
-                      appState.toggleGuess();
-                    },
-                    icon: Icon(icon),
-                    label: Text('Vowel'),
+                    child: Text('Next'),
                   ),*/
+                ],
+              ),
+            ],
+          ),
+        );
+      }
+      else if (buttons==3){
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(padding: const EdgeInsets.all(8.0)),
+              Row(
+                children:[
+                  Padding(padding: const EdgeInsets.all(8.0)),
                   SizedBox(width: 10),
-                  ElevatedButton(
-                  onPressed: () {
-                    appState.Button1Click();
-                    appState.getNext();
-                  },
-                  child: Text(button1String.toString()),
+                  if (appState.hint1==true) 
+                    Hint1Card()
+                  else
+                    BlueCard(),
+                  Padding(padding: const EdgeInsets.all(8.0)),
+                  SizedBox(width: 10),
+                  BigCard(),
+                  Padding(padding: const EdgeInsets.all(8.0)),
+                  SizedBox(width: 10),
+                  Hint2Card()
+                ],
+              ),
+              SizedBox(height: 100),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                    SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        appState.getPrev();
+                      },
+                      child: Text('Go Back'),
+                    ),
+                    /*ElevatedButton.icon(
+                      onPressed: () {
+                        appState.toggleGuess();
+                      },
+                      icon: Icon(icon),
+                      label: Text('Vowel'),
+                    ),*/
+                    SizedBox(width: 10),
+                    ElevatedButton(
+                    onPressed: () {
+                      appState.Button1Click();
+                      appState.getNext();
+                    },
+                    child: Text(button1String.toString()),
+                    ),
+                    SizedBox(width: 10),
+                    ElevatedButton(
+                    onPressed: () {
+                      appState.Button2Click();
+                      appState.getNext();
+                    },
+                    child: Text(button2String.toString()),
                   ),
                   SizedBox(width: 10),
                   ElevatedButton(
-                  onPressed: () {
-                    appState.Button2Click();
-                    appState.getNext();
-                  },
-                  child: Text(button2String.toString()),
-                ),
+                    onPressed: () {
+                      appState.Button3Click();
+                      appState.getNext();
+                    },
+                    child: Text(button3String.toString()),
+                  ),
                   SizedBox(width: 10),
                   ElevatedButton(
-                  onPressed: () {
-                    appState.setHint1();
-                  },
-                  child: Text(hint1String.toString()),
-                ),
+                    onPressed: () {
+                      appState.setHint1();
+                    },
+                    child: Text(hint1String.toString()),
+                  ),
                   SizedBox(width: 10),
                   ElevatedButton(
-                  onPressed: () {
-                    appState.setHint2();
-                  },
-                  child: Text(hint2String.toString()),
-                ), 
-                /*SizedBox(width: 5),
-                ElevatedButton(
-                  onPressed: () {
-                    appState.getNext();
-                  },
-                  child: Text('Next'),
-                ),*/
-              ],
-            ),
-          ],
-        ),
-      );
+                    onPressed: () {
+                      appState.setHint2();
+                    },
+                    child: Text(hint2String.toString()),
+                  ), 
+                ],
+              ),
+            ],
+          ),
+        );
+      }
     }  
     if (appState.done) {
       Future.microtask(() {
