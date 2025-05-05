@@ -8,6 +8,8 @@ import 'package:audioplayers/audioplayers.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'dart:developer' as developer;
+import 'package:responsive_builder/responsive_builder.dart';
+
 
 /* All game details loaded globaly when the app starts
  * This is done to avoid loading the game details multiple times when navigating between pages.
@@ -449,6 +451,7 @@ class MyAppState extends ChangeNotifier {
     numb = 1;
     button1Clicked.clear();
     button2Clicked.clear();
+    //button2Clicked.clear();
     hint1=false;
     hint2=false;
     buttonstrs=[];
@@ -493,70 +496,75 @@ class StartPageState extends State<StartPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     wi.Size size = wi.Size(256.0,96.0);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Start Page'),
-      ),
-      body: Container(
-        color: theme.colorScheme.primaryContainer, // Matching GeneratorPage background
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Card(
-                color: Color.fromRGBO(0, 0, 0, 1),
-                elevation: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Please select an option below',
-                    style: theme.textTheme.headlineMedium!.copyWith(
-                      color: theme.colorScheme.onSecondary,
+    return ResponsiveBuilder(builder: (context, sizingInformation) {
+      double tsize = sizingInformation.isMobile ? 16 : 48;
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Start Page'),
+        ),
+        body: Container(
+          color: theme.colorScheme.primaryContainer, // Matching GeneratorPage background
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Card(
+                  color: Color.fromRGBO(0, 0, 0, 1),
+                  elevation: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Please select an option below',
+                      style: theme.textTheme.headlineMedium!.copyWith(
+                        color: theme.colorScheme.onSecondary,
+                        fontSize: tsize,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SetQuestionCountPage(gameDetailsList:[])),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: theme.colorScheme.primary,
-                      minimumSize: size,
+                SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SetQuestionCountPage(gameDetailsList:[])),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: theme.colorScheme.primary,
+                      ),
+                      child: Text('Play Game',style: theme.textTheme.headlineLarge!.copyWith(
+                            color: theme.colorScheme.onPrimary,
+                            fontSize: tsize
+                          ),),
                     ),
-                    child: Text('Play Game',style: theme.textTheme.headlineLarge!.copyWith(
-                          color: theme.colorScheme.onPrimary,
-                        ),),
-                  ),
-                  SizedBox(width: 40),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LearnPage(gameDetailsList:[])),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: theme.colorScheme.primary,
-                      minimumSize: size,
+                    SizedBox(width: 40),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LearnPage(gameDetailsList:[])),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: theme.colorScheme.primary,
+                      ),
+                      child: Text('Learn',style: theme.textTheme.headlineLarge!.copyWith(
+                            color: theme.colorScheme.onPrimary,
+                            fontSize: tsize
+                      ),),
                     ),
-                    child: Text('Learn',style: theme.textTheme.headlineLarge!.copyWith(
-                          color: theme.colorScheme.onPrimary,
-                    ),),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
+      );
+    }
     );
   }
 }
@@ -836,88 +844,93 @@ void _playAudio(String test) async {
     final theme = Theme.of(context);
     //staticLoadGameDetails();  
     //_playAudio();
-    return Scaffold(
-      appBar: AppBar(title: Text('Learn')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Card(
-              color: Color.fromRGBO(0, 0, 0, 1),
-              elevation: 5,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  texts,
-                  style: theme.textTheme.headlineMedium!.copyWith(
-                    color: theme.colorScheme.onSecondary,
+    //kn2 return Scaffold(
+    return ResponsiveBuilder(builder: (context, sizingInformation) {
+      double imageSize = sizingInformation.isMobile ? 150 : 300;
+      return Scaffold(
+        appBar: AppBar(title: Text('Learn')),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Card(
+                color: Color.fromRGBO(0, 0, 0, 1),
+                elevation: 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    texts,
+                    style: theme.textTheme.headlineMedium!.copyWith(
+                      color: theme.colorScheme.onSecondary,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
-            ),
-            Row (
-              mainAxisAlignment: MainAxisAlignment.center,
-              children:[
-                const SizedBox(height: 10),
-                Image.asset(
-                  //flashcards[currentIndex],
-                  currentFileName,
-                  height: 300,//(gameDetailsList.isNotEmpty)? gameDetailsList[gamePicked].learn.normal[currentDirectoryIndex].height!.toDouble(): 300,
-                  width: 300,//(gameDetailsList.isNotEmpty) ? gameDetailsList[gamePicked].learn.normal[currentDirectoryIndex].width!.toDouble(): 300, 
-                  fit: BoxFit.cover,
-                ),
-               Padding (padding: const EdgeInsets.only(right:20.0),),
-                const SizedBox(height: 10, width: 100),
-                Image.asset(
-                  //flashcardsHint1[currentIndex],
-                  hint1FileName,
-                  //height: 250,//(gameDetailsList.isNotEmpty)? gameDetailsList[gamePicked].learn.hint1[currentDirectoryIndex].height!.toDouble(): 200,
-                  //width: 500,//(gameDetailsList.isNotEmpty)? gameDetailsList[gamePicked].learn.hint1[currentDirectoryIndex].width!.toDouble(): 350, 
-                  fit: BoxFit.cover,
-                ),
-                //Padding (padding: const EdgeInsets.only(right:20.0),),
-                //const SizedBox(height: 10, width:20),
-                //Text(
-                //  flashcardsHint2[currentIndex],
-                //  style: TextStyle(
-                //    height: 30, 
-                //    fontSize: 20,
-                //    color: Colors.deepPurple,
-                //    decorationThickness:2.85,
-                //  ),
-                //),
-                /*Padding (padding: const EdgeInsets.only(right:30.0),),
-                const SizedBox(height: 10, width:10),
-                Text(
-                  flashcardsWhy1[currentIndex],
-                  style: TextStyle(
-                    height: 30, 
-                    fontSize: 20,
-                    fontStyle: FontStyle.italic,
-                    color: Colors.red,
-                    decorationThickness:2.85,
+              Row (
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:[
+                  const SizedBox(height: 10),
+                  Image.asset(
+                    //flashcards[currentIndex],
+                    currentFileName,
+                    height: imageSize, //300,//(gameDetailsList.isNotEmpty)? gameDetailsList[gamePicked].learn.normal[currentDirectoryIndex].height!.toDouble(): 300,
+                    width: imageSize, //300,//(gameDetailsList.isNotEmpty) ? gameDetailsList[gamePicked].learn.normal[currentDirectoryIndex].width!.toDouble(): 300, 
+                    fit: BoxFit.cover,
                   ),
-                ),*/
-              ],
-            ), //Row
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: prevCard, 
-                  child: Text((gameDetailsList.isNotEmpty)? gameDetailsList[gamePicked].learn.button['Back']['Name']: 'Previous'),
-                ),
-                const SizedBox(width: 20),
-                ElevatedButton(
-                  onPressed: nextCard,
-                  child: Text(gameDetailsList.isNotEmpty? gameDetailsList[gamePicked].learn.button['Next']['Name']:'Next'),
-                ),
-              ],
-            ),
-          ], //children
+                Padding (padding: const EdgeInsets.only(right:20.0),),
+                  SizedBox(height: 10, width: imageSize/3),
+                  Image.asset(
+                    //flashcardsHint1[currentIndex],
+                    hint1FileName,
+                    height: imageSize, //250,//(gameDetailsList.isNotEmpty)? gameDetailsList[gamePicked].learn.hint1[currentDirectoryIndex].height!.toDouble(): 200,
+                    width: imageSize, //500,//(gameDetailsList.isNotEmpty)? gameDetailsList[gamePicked].learn.hint1[currentDirectoryIndex].width!.toDouble(): 350, 
+                    fit: BoxFit.cover,
+                  ),
+                  //Padding (padding: const EdgeInsets.only(right:20.0),),
+                  //const SizedBox(height: 10, width:20),
+                  //Text(
+                  //  flashcardsHint2[currentIndex],
+                  //  style: TextStyle(
+                  //    height: 30, 
+                  //    fontSize: 20,
+                  //    color: Colors.deepPurple,
+                  //    decorationThickness:2.85,
+                  //  ),
+                  //),
+                  /*Padding (padding: const EdgeInsets.only(right:30.0),),
+                  const SizedBox(height: 10, width:10),
+                  Text(
+                    flashcardsWhy1[currentIndex],
+                    style: TextStyle(
+                      height: 30, 
+                      fontSize: 20,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.red,
+                      decorationThickness:2.85,
+                    ),
+                  ),*/
+                ],
+              ), //Row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: prevCard, 
+                    child: Text((gameDetailsList.isNotEmpty)? gameDetailsList[gamePicked].learn.button['Back']['Name']: 'Previous'),
+                  ),
+                  const SizedBox(width: 20),
+                  ElevatedButton(
+                    onPressed: nextCard,
+                    child: Text(gameDetailsList.isNotEmpty? gameDetailsList[gamePicked].learn.button['Next']['Name']:'Next'),
+                  ),
+                ],
+              ),
+            ], //children
+          ),
         ),
-      ),
+      );
+      }
     );
   }
 }
@@ -948,282 +961,374 @@ class SetQuestionCountPageState extends State<SetQuestionCountPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    wi.Size size = wi.Size(256.0,96.0);
     var appState = context.watch<MyAppState>();
     print('3333 Calling staticLoadGameDetails 999-10');
     staticLoadGameDetails();
     print('3333 Called staticLoadGameDetails 999-10');
-    return Scaffold(
-      appBar: AppBar(title: Text('Set Number of Questions')),
-      body: Container(
-        color: theme.colorScheme.primaryContainer,
-        padding: const EdgeInsets.all(10),
-        child: Center(
-          child: Column(
-            //mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const SizedBox(width: 128),
-                  Card(
-                    color: Color.fromRGBO(0, 0, 0, 1),
-                    elevation: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        //'How many questions do you want?',
-                        gameDetailsList[gamePicked].play.numberOfQuestions['QuestionText'],
-                        style: theme.textTheme.headlineMedium!.copyWith(
-                          color: theme.colorScheme.onSecondary,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 256),
-                  Card(
-                    color: Color.fromRGBO(0, 0, 0, 1),
-                    elevation: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Select to make game harder",
-                        style: theme.textTheme.headlineMedium!.copyWith(
-                          color: theme.colorScheme.onSecondary,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(width: 140),
-                  Flexible(
-                    child:SizedBox(
-                      width:420,
-                      child: TextField(
-                        controller: _controller,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          //labelText: 'Enter #questions from 6 to 19, default #question-count=10',
-                          labelText: gameDetailsList[gamePicked].play.numberOfQuestions['QuestionHint'],
-                          errorText: errorMessage.isEmpty ? null : errorMessage,
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 448),
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      /* Text("",
-                        style: theme.textTheme.headlineMedium!.copyWith(
+    return ResponsiveBuilder(builder: (context, sizingInformation) {
+      wi.Size size = sizingInformation.isMobile ? wi.Size(128.0,48.0):wi.Size(256.0,96.0);
+      double tsize = sizingInformation.isMobile ? 210 : 420;
+      double ttsize = sizingInformation.isMobile ? 105 : 420;
+      double fsize = sizingInformation.isMobile ? 36 : 48;
+      double ssize = sizingInformation.isMobile ? 32 : 512;
+      double otsize = sizingInformation.isMobile ? 12 : 36;
+      double xsize = sizingInformation.isMobile ? 0.64 : 1.28;
+      return Scaffold(
+        appBar: AppBar(title: Text('Set Number of Questions')),
+        body: Container(
+          color: theme.colorScheme.primaryContainer,
+          padding: const EdgeInsets.all(10),
+          child: Center(
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    SizedBox(width: ssize/3),
+                    Card(
                       color: Color.fromRGBO(0, 0, 0, 1),
-                    ),), */
-                      Switch(
-                        value: appState.hard,
-                        onChanged: (bool value) {
-                          setState(() {
-                            appState.hard = value;
-                          });
-                        },
+                      elevation: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          //'How many questions do you want?',
+                          gameDetailsList[gamePicked].play.numberOfQuestions['QuestionText'],
+                          style: theme.textTheme.headlineMedium!.copyWith(
+                            color: theme.colorScheme.onSecondary,
+                            fontSize: otsize
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
-              /* const SizedBox(height: 40),
-              const SizedBox(width: 384),
-              ElevatedButton(
-                onPressed: () {
-                  final input = _controller.text;
-                  if (input.isNotEmpty) {
-                    final number = int.tryParse(input);
-                    if (number != null && number > 5) {
-                      // Save the number of questions to app state or pass to next screen
-                      // You can modify the state or pass the number to the game screen
-                      appState.setQuestionCount(number);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyHomePage(questionCount: number),
+                    ),
+                    SizedBox(width: ssize/2),
+                    Card(
+                      color: Color.fromRGBO(0, 0, 0, 1),
+                      elevation: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Select to make game harder",
+                          style: theme.textTheme.headlineMedium!.copyWith(
+                            color: theme.colorScheme.onSecondary,
+                            fontSize: otsize
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                      );
-                    } else {
-                      setState(() {
-                        errorMessage = 'Please enter a valid number greater than 5';
-                      });
-                    }
-                  } 
-                  else{appState.setQuestionCount(10);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyHomePage(questionCount: 10),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(width: ssize/3),
+                    Flexible(
+                      child:SizedBox(
+                        width:tsize,
+                        height: fsize,
+                        child: TextField(
+                          controller: _controller,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            //labelText: 'Enter #questions from 6 to 19, default #question-count=10',
+                            labelText: gameDetailsList[gamePicked].play.numberOfQuestions['QuestionHint'],
+                            errorText: errorMessage.isEmpty ? null : errorMessage,
+                            border: OutlineInputBorder(),
+                          ),
                         ),
-                      );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                      backgroundColor: theme.colorScheme.primary,
-                      minimumSize: Size(256, 96),
+                      ),
+                    ),
+                    SizedBox(width: ssize),
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        /* Text("",
+                          style: theme.textTheme.headlineMedium!.copyWith(
+                        color: Color.fromRGBO(0, 0, 0, 1),
+                      ),), */
+                        Transform.scale(
+                          scale:xsize,
+                          child:Switch(
+                            value: appState.hard,
+                            onChanged: (bool value) {
+                              setState(() {
+                                appState.hard = value;
+                              });
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
-                child: Text('Start Game',style: theme.textTheme.headlineLarge!.copyWith(
-                          color: theme.colorScheme.onPrimary,
-                  ),
-                ),
-              ), */
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center, 
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  const SizedBox(height: 128),
-                  ElevatedButton(
-                    onPressed: () {
-                      final input = _controller.text;
-                      if (input.isNotEmpty) {
-                        final number = int.tryParse(input);
-                        int maxNumber = gameDetailsList[gamePicked].play.numberOfQuestions['ValidationRangeMax']+1;
-                        int minNumber = gameDetailsList[gamePicked].play.numberOfQuestions['ValidationRangeMin']-1;
-                        if (number != null && number > minNumber) {
-                          if (number<maxNumber){
-                            appState.setQuestionCount(number);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MyHomePage(questionCount: number, gameDetailsList:[]),
-                              ),
-                            );
-                          }
-                          else{
-                            setState(() {
-                              errorMessage = 'Too many questions, please enter a valid number less than $maxNumber';
-                            });
-                          }
-                        } else {
-                          setState(() {
-                            errorMessage = 'Please enter a valid number greater than $minNumber';
-                          });
-                        }
-                      } else {
-                        int defaultNumber = gameDetailsList[gamePicked].play.numberOfQuestions['DefaultQuestionCount'];
-                        appState.setQuestionCount(defaultNumber);
+                /* const SizedBox(height: 40),
+                const SizedBox(width: 384),
+                ElevatedButton(
+                  onPressed: () {
+                    final input = _controller.text;
+                    if (input.isNotEmpty) {
+                      final number = int.tryParse(input);
+                      if (number != null && number > 5) {
+                        // Save the number of questions to app state or pass to next screen
+                        // You can modify the state or pass the number to the game screen
+                        appState.setQuestionCount(number);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MyHomePage(questionCount: defaultNumber, gameDetailsList:[]),
+                            builder: (context) => MyHomePage(questionCount: number),
                           ),
                         );
+                      } else {
+                        setState(() {
+                          errorMessage = 'Please enter a valid number greater than 5';
+                        });
                       }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: theme.colorScheme.primary,
-                      minimumSize: size,
-                    ),
-                    child: Text(
-                      'Start Game',
-                      style: theme.textTheme.headlineLarge!.copyWith(
-                        color: theme.colorScheme.onPrimary,
-                      ),
+                    } 
+                    else{appState.setQuestionCount(10);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MyHomePage(questionCount: 10),
+                          ),
+                        );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                        backgroundColor: theme.colorScheme.primary,
+                        minimumSize: Size(256, 96),
+                  ),
+                  child: Text('Start Game',style: theme.textTheme.headlineLarge!.copyWith(
+                            color: theme.colorScheme.onPrimary,
                     ),
                   ),
-                ],
-              ),
-
-            ],
+                ), */
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center, 
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    SizedBox(height: tsize/3),
+                    ElevatedButton(
+                      onPressed: () {
+                        final input = _controller.text;
+                        if (input.isNotEmpty) {
+                          final number = int.tryParse(input);
+                          int maxNumber = gameDetailsList[gamePicked].play.numberOfQuestions['ValidationRangeMax']+1;
+                          int minNumber = gameDetailsList[gamePicked].play.numberOfQuestions['ValidationRangeMin']-1;
+                          if (number != null && number > minNumber) {
+                            if (number<maxNumber){
+                              appState.setQuestionCount(number);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MyHomePage(questionCount: number, gameDetailsList:[]),
+                                ),
+                              );
+                            }
+                            else{
+                              setState(() {
+                                errorMessage = 'Too many questions, please enter a valid number less than $maxNumber';
+                              });
+                            }
+                          } else {
+                            setState(() {
+                              errorMessage = 'Please enter a valid number greater than $minNumber';
+                            });
+                          }
+                        } else {
+                          int defaultNumber = gameDetailsList[gamePicked].play.numberOfQuestions['DefaultQuestionCount'];
+                          appState.setQuestionCount(defaultNumber);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MyHomePage(questionCount: defaultNumber, gameDetailsList:[]),
+                            ),
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: theme.colorScheme.primary,
+                        minimumSize: size,
+                      ),
+                      child: Text(
+                        'Start Game',
+                        style: theme.textTheme.headlineLarge!.copyWith(
+                          color: theme.colorScheme.onPrimary,
+                          fontSize: otsize
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
+      );
+    }
     );
   }
 }
 class MyHomePage extends StatefulWidget {
   final int questionCount;
-  MyHomePage({Key? key, required this.questionCount, required gameDetailsList}) : super(key: key);
+  final List gameDetailsList;
+
+  MyHomePage({Key? key, required this.questionCount, required this.gameDetailsList}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  var selectedIndex = 0;
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
+  int selectedIndex = 0;
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging == false) {
+        setState(() {
+          selectedIndex = _tabController.index;
+        });
+      }
+    });
+  }
+  
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  Widget getPage() {
+    if (selectedIndex == 0) {
+      return GeneratorPage(gameDetailsList: widget.gameDetailsList);
+    } else if (selectedIndex == 1) {
+      return EndPage();
+    } else {
+      throw UnimplementedError('No widget for $selectedIndex');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    Widget page;
-    if (selectedIndex == 0) {
-      page = GeneratorPage(gameDetailsList: [],);
-    } else if (selectedIndex == 1) {
-      page = EndPage();
-    } else {
-      throw UnimplementedError('no widget for $selectedIndex');
-    }
-
     var appState = context.watch<MyAppState>();
+
     return LayoutBuilder(
       builder: (context, constraints) {
-        var appState = context.watch<MyAppState>();
-        Text tempQuestion;
-        if (!appState.done) {
+        bool isWideScreen = constraints.maxWidth >= 1000;
+        Widget tempQuestion;
+        if (appState.done) {
+          tempQuestion = SizedBox.shrink();
+        } else {
           tempQuestion = Text('Question Number: ${appState.numb}');
-        } 
-        else {
-          tempQuestion = Text('');
         }
-        return Scaffold(
-          appBar: AppBar(
-            title: SizedBox(
-              child: tempQuestion,
+
+        if (isWideScreen) {
+          return Scaffold(
+            appBar: AppBar(
+              title: tempQuestion,
             ),
-          ),
-          body: Row(
-            children: [
-              SafeArea(
-                child: NavigationRail(
-                  extended: constraints.maxWidth >= 600,
-                  destinations: [
-                    NavigationRailDestination(
-                      icon: Icon(Icons.home),
-                      label: Text('Home'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.question_answer),
-                      label: Text('Answers'),
-                    ),
+            body: Row(
+              children: [
+                SafeArea(
+                  child: NavigationRail(
+                    extended: constraints.maxWidth >= 800,
+                    selectedIndex: selectedIndex,
+                    onDestinationSelected: (value) {
+                      if (value == 0) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => StartPage(gameDetailsList: widget.gameDetailsList),
+                          ),
+                        );
+                      } else {
+                        setState(() {
+                          selectedIndex = value;
+                        });
+                      }
+                    },
+                    destinations: const [
+                      NavigationRailDestination(
+                        icon: Icon(Icons.home),
+                        label: Text('Home'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.question_answer),
+                        label: Text('Answers'),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    child: getPage(),
+                  ),
+                ),
+              ],
+            ),
+          );
+        /* } else {
+          return DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              appBar: AppBar(
+                title: tempQuestion,
+                bottom: TabBar(
+                  controller: _tabController,
+                  tabs: const [
+                    Tab(icon: Icon(Icons.home), text: 'Home'),
+                    Tab(icon: Icon(Icons.question_answer), text: 'Answers'),
                   ],
-                  selectedIndex: selectedIndex,
-                  onDestinationSelected: (value) {
-                    if (value == 0) {
-                      // Navigate back to StartPage instead of switching index
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => StartPage(gameDetailsList:[])),
-                      );
-                    } else {
-                      setState(() {
-                        selectedIndex = value;
-                      });
-                    }
-                  },
                 ),
               ),
-              Expanded(
-                child: Container(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  child: page,  // ← Here.
-                ),
+              body: TabBarView(
+                controller: _tabController,
+                children: [
+                  GeneratorPage(gameDetailsList: widget.gameDetailsList),
+                  EndPage(),
+                ],
               ),
-            ],
-          ),
-        );
-      }
+            ),
+          );
+        } */
+        } else {
+          return Scaffold(
+            appBar: AppBar(
+              title: tempQuestion,
+              bottom: TabBar(
+                controller: _tabController,
+                onTap: (index) {
+                  setState(() {
+                    selectedIndex = index;
+                    _tabController.index = index;
+                  });
+                },
+                tabs: const [
+                  Tab(icon: Icon(Icons.home), text: 'Home'),
+                  Tab(icon: Icon(Icons.question_answer), text: 'Answers'),
+                ],
+              ),
+            ),
+            body: TabBarView(
+              controller: _tabController,
+              children: [
+                getPage(), // Uses selectedIndex for actual content
+                getPage(),
+              ],
+            ),
+          );
+        }
+
+      },
     );
   }
 }
@@ -1401,170 +1506,187 @@ class GeneratorPageState extends State<GeneratorPage> {
 
     if (appState.done==false){
       if (buttons==2){
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(padding: const EdgeInsets.all(8.0)),
-              Row(
-                children:[
-                  Padding(padding: const EdgeInsets.all(8.0)),
-                  SizedBox(width: 10),
-                  if (appState.hint1==true) 
-                    Hint1Card()
-                  else
-                    BlueCard(),
-                  Padding(padding: const EdgeInsets.all(8.0)),
-                  SizedBox(width: 10),
-                  BigCard(),
-                  Padding(padding: const EdgeInsets.all(8.0)),
-                  SizedBox(width: 10),
-                  Hint2Card()
-                ],
-              ),
-              SizedBox(height: 100),
-              Row(
-                mainAxisSize: MainAxisSize.min,
+        return ResponsiveBuilder(builder: (context, sizingInformation) {
+          double tsize = sizingInformation.isMobile ? 5 : 10;
+          double imageSize = sizingInformation.isMobile ? 150 : 300;
+          return Center(
+            //child: Transform.scale(
+              //scale: MediaQuery.of(context).size.width < 800 ? MediaQuery.of(context).size.width/1200 : 1.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        appState.getPrev();
-                      },
-                      child: Text('Go Back'),
-                    ),
-                    /*ElevatedButton.icon(
-                      onPressed: () {
-                        appState.toggleGuess();
-                      },
-                      icon: Icon(icon),
-                      label: Text('Vowel'),
-                    ),*/
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                    onPressed: () {
-                      appState.Button1Click();
-                      appState.getNext();
-                    },
-                    child: Text(button1String.toString()),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                    onPressed: () {
-                      appState.Button2Click();
-                      appState.getNext();
-                    },
-                    child: Text(button2String.toString()),
+                  Padding(padding: const EdgeInsets.all(8.0)),
+                  Row(
+                    children:[
+                      Padding(padding: const EdgeInsets.all(8.0)),
+                      SizedBox(width: 10),
+                      if (appState.hint1==true) 
+                        Hint1Card()
+                      else if (tsize!=5)
+                        BlueCard(),
+                      Padding(padding: const EdgeInsets.all(8.0)),
+                      SizedBox(width: 10),
+                      BigCard(),
+                      Padding(padding: const EdgeInsets.all(8.0)),
+                      SizedBox(width: 10),
+                      Hint2Card()
+                    ],
                   ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                    onPressed: () {
-                      appState.setHint1();
-                    },
-                    child: Text(hint1String.toString()),
+                  SizedBox(height: tsize*10),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                        SizedBox(width: tsize),
+                        ElevatedButton(
+                          onPressed: () {
+                            appState.getPrev();
+                          },
+                          child: Text('Go Back'),
+                          //fontSize: 
+                        ),
+                        /*ElevatedButton.icon(
+                          onPressed: () {
+                            appState.toggleGuess();
+                          },
+                          icon: Icon(icon),
+                          label: Text('Vowel'),
+                        ),*/
+                        SizedBox(width: tsize),
+                        ElevatedButton(
+                        onPressed: () {
+                          appState.Button1Click();
+                          appState.getNext();
+                        },
+                        child: Text(button1String.toString()),
+                        ),
+                        SizedBox(width: tsize),
+                        ElevatedButton(
+                        onPressed: () {
+                          appState.Button2Click();
+                          appState.getNext();
+                        },
+                        child: Text(button2String.toString()),
+                      ),
+                        SizedBox(width: tsize),
+                        ElevatedButton(
+                        onPressed: () {
+                          appState.setHint1();
+                        },
+                        child: Text(hint1String.toString()),
+                      ),
+                        SizedBox(width: tsize),
+                        ElevatedButton(
+                        onPressed: () {
+                          appState.setHint2();
+                        },
+                        child: Text(hint2String.toString()),
+                      ), 
+                      /*SizedBox(width: 5),
+                      ElevatedButton(
+                        onPressed: () {
+                          appState.getNext();
+                        },
+                        child: Text('Next'),
+                      ),*/
+                    ],
                   ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                    onPressed: () {
-                      appState.setHint2();
-                    },
-                    child: Text(hint2String.toString()),
-                  ), 
-                  /*SizedBox(width: 5),
-                  ElevatedButton(
-                    onPressed: () {
-                      appState.getNext();
-                    },
-                    child: Text('Next'),
-                  ),*/
                 ],
               ),
-            ],
-          ),
+            //),
+          );
+        }
         );
       }
       else if (buttons==3){
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(padding: const EdgeInsets.all(8.0)),
-              Row(
-                children:[
-                  Padding(padding: const EdgeInsets.all(8.0)),
-                  SizedBox(width: 10),
-                  if (appState.hint1==true) 
-                    Hint1Card()
-                  else
-                    BlueCard(),
-                  Padding(padding: const EdgeInsets.all(8.0)),
-                  SizedBox(width: 10),
-                  BigCard(),
-                  Padding(padding: const EdgeInsets.all(8.0)),
-                  SizedBox(width: 10),
-                  Hint2Card()
-                ],
-              ),
-              SizedBox(height: 100),
-              Row(
-                mainAxisSize: MainAxisSize.min,
+        return ResponsiveBuilder(builder: (context, sizingInformation) {
+          double tsize = sizingInformation.isMobile ? 5 : 10;
+          double imageSize = sizingInformation.isMobile ? 150 : 300;
+          return Center(
+            //child: Transform.scale(
+              //scale: MediaQuery.of(context).size.width < 800 ? MediaQuery.of(context).size.width/1200 : 1.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        appState.getPrev();
-                      },
-                      child: Text('Go Back'),
-                    ),
-                    /*ElevatedButton.icon(
-                      onPressed: () {
-                        appState.toggleGuess();
-                      },
-                      icon: Icon(icon),
-                      label: Text('Vowel'),
-                    ),*/
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                    onPressed: () {
-                      appState.Button1Click();
-                      appState.getNext();
-                    },
-                    child: Text(button1String.toString()),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                    onPressed: () {
-                      appState.Button2Click();
-                      appState.getNext();
-                    },
-                    child: Text(button2String.toString()),
+                  Padding(padding: const EdgeInsets.all(8.0)),
+                  Row(
+                    children:[
+                      Padding(padding: const EdgeInsets.all(8.0)),
+                      SizedBox(width: 10),
+                      if (appState.hint1==true) 
+                        Hint1Card()
+                      else if (tsize!=5)
+                        BlueCard(),
+                      Padding(padding: const EdgeInsets.all(8.0)),
+                      SizedBox(width: 10),
+                      BigCard(),
+                      //Padding(padding: const EdgeInsets.all(8.0)),
+                      //SizedBox(width: 10),
+                      Hint2Card()
+                    ],
                   ),
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      appState.Button3Click();
-                      appState.getNext();
-                    },
-                    child: Text(button3String.toString()),
+                  SizedBox(height: tsize*10),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                        SizedBox(width: tsize),
+                        ElevatedButton(
+                          onPressed: () {
+                            appState.getPrev();
+                          },
+                          child: Text('Go Back'),
+                        ),
+                        /*ElevatedButton.icon(
+                          onPressed: () {
+                            appState.toggleGuess();
+                          },
+                          icon: Icon(icon),
+                          label: Text('Vowel'),
+                        ),*/
+                        SizedBox(width: tsize),
+                        ElevatedButton(
+                        onPressed: () {
+                          appState.Button1Click();
+                          appState.getNext();
+                        },
+                        child: Text(button1String.toString()),
+                        ),
+                        SizedBox(width: tsize),
+                        ElevatedButton(
+                        onPressed: () {
+                          appState.Button2Click();
+                          appState.getNext();
+                        },
+                        child: Text(button2String.toString()),
+                      ),
+                      SizedBox(width: tsize),
+                      ElevatedButton(
+                        onPressed: () {
+                          appState.Button3Click();
+                          appState.getNext();
+                        },
+                        child: Text(button3String.toString()),
+                      ),
+                      SizedBox(width: tsize),
+                      ElevatedButton(
+                        onPressed: () {
+                          appState.setHint1();
+                        },
+                        child: Text(hint1String.toString()),
+                      ),
+                      SizedBox(width: tsize),
+                      ElevatedButton(
+                        onPressed: () {
+                          appState.setHint2();
+                        },
+                        child: Text(hint2String.toString()),
+                      ), 
+                    ],
                   ),
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      appState.setHint1();
-                    },
-                    child: Text(hint1String.toString()),
-                  ),
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      appState.setHint2();
-                    },
-                    child: Text(hint2String.toString()),
-                  ), 
                 ],
               ),
-            ],
-          ),
+            //)
+          );
+        }
         );
       }
     }  
@@ -1573,6 +1695,7 @@ class GeneratorPageState extends State<GeneratorPage> {
         var homePageState = context.findAncestorStateOfType<_MyHomePageState>();
         homePageState?.setState(() {
           homePageState.selectedIndex = 1;  // Switch to EndPage
+          homePageState._tabController.index = 1;
         });
       });
       Future.delayed(Duration(seconds: 3), () {
@@ -1641,7 +1764,12 @@ class BigCard extends StatelessWidget {
    for(int i=0;i<maxCategories;i++){
       if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
         directory = gameDetailsList[gamePicked].play.playModes['Easy'][i]['Directory'];
-        return Image.asset('$directory/$current.jpg');
+        //return Image.asset('$directory/$current.jpg');
+                return ResponsiveBuilder(builder: (context, sizingInformation) {
+          double imageSize = sizingInformation.isMobile ? 150 : 300;
+          return Image.asset('$directory/$current.jpg', height: imageSize, width: imageSize);//$current
+        }
+        );    
       }
    }
    for(int i=maxCategories;i<2*maxCategories;i++){
@@ -1650,10 +1778,20 @@ class BigCard extends StatelessWidget {
     print(startendnumbers[2*i+1]);
       if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
         directory = gameDetailsList[gamePicked].play.playModes['Hard'][i-maxCategories]['Directory'];
-        return Image.asset('$directory/$current.jpg');
+        return ResponsiveBuilder(builder: (context, sizingInformation) {
+          double imageSize = sizingInformation.isMobile ? 150 : 300;
+          return Image.asset('$directory/$current.jpg', height: imageSize, width: imageSize);//$current
+        }
+        );    
+        
+        
       }
    }
-   return Image.asset('assets/images/blueright.jpg');
+  return ResponsiveBuilder(builder: (context, sizingInformation) {
+      double imageSize = sizingInformation.isMobile ? 150 : 300;
+      return Image.asset('assets/images/blueright.jpg', height: imageSize, width: imageSize);//$current
+    }
+    );     
   }
 }
 
@@ -1666,7 +1804,11 @@ class BlueCard extends StatelessWidget {
     final style = theme.textTheme.displayMedium!.copyWith(
       color: theme.colorScheme.onPrimary,
     );
-    return Image.asset('assets/images/blueright.jpg');
+    return ResponsiveBuilder(builder: (context, sizingInformation) {
+      double imageSize = sizingInformation.isMobile ? 150 : 300;
+      return Image.asset('assets/images/blueright.jpg', height: imageSize, width: imageSize);//$current
+    }
+    );    
   }
 }
 
@@ -1681,6 +1823,7 @@ class Hint1Card extends StatelessWidget {
       color: theme.colorScheme.onPrimary,
     );
     var hint1Directory = "";
+
     /* //get all easy value
     int minStartFirstNumber = gameDetailsList[gamePicked].play.playModes['Easy'][0]['StartNumber'];
     int minEndFirstNumber = gameDetailsList[gamePicked].play.playModes['Easy'][0]['EndNumber'];
@@ -1730,10 +1873,18 @@ class Hint1Card extends StatelessWidget {
     if (appState.hint1==true){
       // reset it to false so go back works
       //appState.hint1 = false;
-      return Image.asset('$hint1Directory/H$currentstr.jpg');//$current
+          return ResponsiveBuilder(builder: (context, sizingInformation) {
+            double imageSize = sizingInformation.isMobile ? 150 : 300;
+            return Image.asset('$hint1Directory/H$currentstr.jpg', height: imageSize, width: imageSize);//$current
+          }
+          );
     }
     else{
-      return Image.asset('assets/images/blueright.jpg');
+          return ResponsiveBuilder(builder: (context, sizingInformation) {
+            double imageSize = sizingInformation.isMobile ? 150 : 300;
+            return Image.asset('assets/images/blueright.jpg', height: imageSize, width:imageSize);
+          }
+          );      
     }
   }
 }
