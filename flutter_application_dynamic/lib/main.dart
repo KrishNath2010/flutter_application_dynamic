@@ -1508,7 +1508,6 @@ class GeneratorPageState extends State<GeneratorPage> {
       if (buttons==2){
         return ResponsiveBuilder(builder: (context, sizingInformation) {
           double tsize = sizingInformation.isMobile ? 5 : 10;
-          double imageSize = sizingInformation.isMobile ? 150 : 300;
           return Center(
             //child: Transform.scale(
               //scale: MediaQuery.of(context).size.width < 800 ? MediaQuery.of(context).size.width/1200 : 1.0,
@@ -1538,6 +1537,11 @@ class GeneratorPageState extends State<GeneratorPage> {
                     children: [
                         SizedBox(width: tsize),
                         ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(tsize*8/5),
+                            minimumSize: Size(0,0),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
                           onPressed: () {
                             appState.getPrev();
                           },
@@ -1553,6 +1557,11 @@ class GeneratorPageState extends State<GeneratorPage> {
                         ),*/
                         SizedBox(width: tsize),
                         ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(tsize*8/5),
+                            minimumSize: Size(0,0),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
                         onPressed: () {
                           appState.Button1Click();
                           appState.getNext();
@@ -1561,6 +1570,11 @@ class GeneratorPageState extends State<GeneratorPage> {
                         ),
                         SizedBox(width: tsize),
                         ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(tsize*8/5),
+                          minimumSize: Size(0,0),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
                         onPressed: () {
                           appState.Button2Click();
                           appState.getNext();
@@ -1569,6 +1583,11 @@ class GeneratorPageState extends State<GeneratorPage> {
                       ),
                         SizedBox(width: tsize),
                         ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(tsize*8/5),
+                          minimumSize: Size(0,0),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
                         onPressed: () {
                           appState.setHint1();
                         },
@@ -1576,6 +1595,11 @@ class GeneratorPageState extends State<GeneratorPage> {
                       ),
                         SizedBox(width: tsize),
                         ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(tsize*8/5),
+                          minimumSize: Size(0,0),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
                         onPressed: () {
                           appState.setHint2();
                         },
@@ -1600,7 +1624,6 @@ class GeneratorPageState extends State<GeneratorPage> {
       else if (buttons==3){
         return ResponsiveBuilder(builder: (context, sizingInformation) {
           double tsize = sizingInformation.isMobile ? 5 : 10;
-          double imageSize = sizingInformation.isMobile ? 150 : 300;
           return Center(
             //child: Transform.scale(
               //scale: MediaQuery.of(context).size.width < 800 ? MediaQuery.of(context).size.width/1200 : 1.0,
@@ -1630,6 +1653,11 @@ class GeneratorPageState extends State<GeneratorPage> {
                     children: [
                         SizedBox(width: tsize),
                         ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(tsize*8/5),
+                            minimumSize: Size(0,0),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
                           onPressed: () {
                             appState.getPrev();
                           },
@@ -1644,6 +1672,11 @@ class GeneratorPageState extends State<GeneratorPage> {
                         ),*/
                         SizedBox(width: tsize),
                         ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(tsize*8/5),
+                            minimumSize: Size(0,0),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
                         onPressed: () {
                           appState.Button1Click();
                           appState.getNext();
@@ -1652,6 +1685,11 @@ class GeneratorPageState extends State<GeneratorPage> {
                         ),
                         SizedBox(width: tsize),
                         ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(tsize*8/5),
+                          minimumSize: Size(0,0),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
                         onPressed: () {
                           appState.Button2Click();
                           appState.getNext();
@@ -1660,6 +1698,11 @@ class GeneratorPageState extends State<GeneratorPage> {
                       ),
                       SizedBox(width: tsize),
                       ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(tsize*8/5),
+                          minimumSize: Size(0,0),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
                         onPressed: () {
                           appState.Button3Click();
                           appState.getNext();
@@ -1668,6 +1711,11 @@ class GeneratorPageState extends State<GeneratorPage> {
                       ),
                       SizedBox(width: tsize),
                       ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(tsize*8/5),
+                          minimumSize: Size(0,0),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
                         onPressed: () {
                           appState.setHint1();
                         },
@@ -1675,6 +1723,11 @@ class GeneratorPageState extends State<GeneratorPage> {
                       ),
                       SizedBox(width: tsize),
                       ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(tsize*8/5),
+                          minimumSize: Size(0,0),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
                         onPressed: () {
                           appState.setHint2();
                         },
@@ -2030,155 +2083,164 @@ class EndPage extends StatelessWidget {
           ),
       ],
     );
-    */
-    return Padding(
-    padding: EdgeInsets.all(16.0), // Adds padding around the entire page
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'You got ${appState.allQuestionsList.length-appState.inanswered.length} questions right out of ${appState.allQuestionsList.length} questions.\n'
-          'You got $percent% of the answers right. Good Job!!',
-          style: TextStyle(fontSize: 16), // Adjust font size if needed
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 20), // Small gap between text and images
-        /* Text(
-          'Here are the answers you said that were consonents but actually are vowels:',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
-        ), */
-        /* Expanded(
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3, 
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-            ),
-            itemCount: missing.length,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  Expanded(
-                    child: Image.asset('assets/images/${missing[index]}.jpg'),
-                  ),
-                  Text(
-                    "Correct Answer: Vowel \n" "Your Answer: Consonent",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              );
-            },
+    */return ResponsiveBuilder(builder: (context, sizingInformation) {
+      double imageSize = sizingInformation.isMobile ? 60 : 300;
+      return Padding(
+      padding: EdgeInsets.all(16.0), // Adds padding around the entire page
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'You got ${appState.allQuestionsList.length-appState.inanswered.length} questions right out of ${appState.allQuestionsList.length} questions.\n'
+            'You got $percent% of the answers right. Good Job!!',
+            style: TextStyle(fontSize: 16), // Adjust font size if needed
+            textAlign: TextAlign.center,
           ),
-        ),
-        /* const SizedBox(height: 20),
-        Text(
-          'Here are the answers you said that were vowels but actually are consonents:',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
-        ), */
-        Expanded(
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3, 
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
+          const SizedBox(height: 20), // Small gap between text and images
+          /* Text(
+            'Here are the answers you said that were consonents but actually are vowels:',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+          ), */
+          /* Expanded(
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, 
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              itemCount: missing.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    Expanded(
+                      child: Image.asset('assets/images/${missing[index]}.jpg'),
+                    ),
+                    Text(
+                      "Correct Answer: Vowel \n" "Your Answer: Consonent",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                );
+              },
             ),
-            itemCount: cmissing.length,
-            itemBuilder: (context, index) {
-              //return Image.asset('assets/images/${cmissing[index]}.jpg');
-              return Column(
-                children: [
-                  Expanded(
-                    child: Image.asset('assets/images/${cmissing[index]}.jpg'),
-                  ),
-                  Text(
-                    "Correct Answer: Consonent \n" "Your Answer: Vowel",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              );
-            },
           ),
-        ),*/
-        Expanded(
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3, 
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
+          /* const SizedBox(height: 20),
+          Text(
+            'Here are the answers you said that were vowels but actually are consonents:',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+          ), */
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, 
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              itemCount: cmissing.length,
+              itemBuilder: (context, index) {
+                //return Image.asset('assets/images/${cmissing[index]}.jpg');
+                return Column(
+                  children: [
+                    Expanded(
+                      child: Image.asset('assets/images/${cmissing[index]}.jpg'),
+                    ),
+                    Text(
+                      "Correct Answer: Consonent \n" "Your Answer: Vowel",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                );
+              },
             ),
-            itemCount: appState.inanswered.length, // Total incorrect answers
-            itemBuilder: (context, index) {
-              //String item;
-              /* String category;
-              String categorys;
-              var button1String = gameDetailsList[gamePicked].play.playModes['Button']['1']['Name'];
-              var button2String = gameDetailsList[gamePicked].play.playModes['Button']['2']['Name'];
+          ),*/
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, 
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              itemCount: appState.inanswered.length, // Total incorrect answers
+              itemBuilder: (context, index) {
+                //String item;
+                /* String category;
+                String categorys;
+                var button1String = gameDetailsList[gamePicked].play.playModes['Button']['1']['Name'];
+                var button2String = gameDetailsList[gamePicked].play.playModes['Button']['2']['Name'];
 
-              // Merge the two lists
-              if (index < missing.length) {
-                item = missing[index]; 
-                category = button1String;//"Vowel"; 
-                categorys = button2String;//"Consonant";
-              } else {
-                item = cmissing[index - missing.length]; 
-                category = button2String;//"Consonant"; 
-                categorys = button1String;//"Vowel"; 
-              } */
-              print("abs");
-              String Userans=(appState.inanswered[index][0]).toString();
-              String Corrans=(appState.inanswered[index][1]).toString();
-              print("bbs");
-              int currentNumber = appState.inanswered[index][2];
-              var directory = "";
-              /* if (currentNumber >= easyStartFirstNumber && currentNumber <= easyEndFirstNumber) {
-                directory = gameDetailsList[gamePicked].play.playModes['Easy'][0]['Directory'];
-              } else if (currentNumber >= easyStartSecondNumber && currentNumber <= easyEndSecondNumber) {
-                directory = gameDetailsList[gamePicked].play.playModes['Easy'][1]['Directory'];
-              } else if (currentNumber >= hardStartFirstNumber && currentNumber <= hardEndFirstNumber) {
-                directory = gameDetailsList[gamePicked].play.playModes['Hard'][0]['Directory'];
-              } else if (currentNumber >= hardStartSecondNumber && currentNumber <= hardEndSecondNumber) {
-                directory = gameDetailsList[gamePicked].play.playModes['Hard'][1]['Directory'];
-              } */
-              print("num");
-              print(maxCategories);
-              print(currentNumber);
-              print(startendnumbers);
-              for(int i=0;i<maxCategories;i++){
-                  if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
-                    print(i);
-                    directory = gameDetailsList[gamePicked].play.playModes['Easy'][i]['Directory'];
-                  }
-              }
-              for(int i=maxCategories;i<2*maxCategories;i++){
-                print("inside");
-                print(startendnumbers[2*i]);
-                print("s");
-                print(startendnumbers[2*i+1]);
-                if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
-                  directory = gameDetailsList[gamePicked].play.playModes['Hard'][i-maxCategories]['Directory'];
+                // Merge the two lists
+                if (index < missing.length) {
+                  item = missing[index]; 
+                  category = button1String;//"Vowel"; 
+                  categorys = button2String;//"Consonant";
+                } else {
+                  item = cmissing[index - missing.length]; 
+                  category = button2String;//"Consonant"; 
+                  categorys = button1String;//"Vowel"; 
+                } */
+                print("abs");
+                String Userans=(appState.inanswered[index][0]).toString();
+                String Corrans=(appState.inanswered[index][1]).toString();
+                print("bbs");
+                int currentNumber = appState.inanswered[index][2];
+                var directory = "";
+                /* if (currentNumber >= easyStartFirstNumber && currentNumber <= easyEndFirstNumber) {
+                  directory = gameDetailsList[gamePicked].play.playModes['Easy'][0]['Directory'];
+                } else if (currentNumber >= easyStartSecondNumber && currentNumber <= easyEndSecondNumber) {
+                  directory = gameDetailsList[gamePicked].play.playModes['Easy'][1]['Directory'];
+                } else if (currentNumber >= hardStartFirstNumber && currentNumber <= hardEndFirstNumber) {
+                  directory = gameDetailsList[gamePicked].play.playModes['Hard'][0]['Directory'];
+                } else if (currentNumber >= hardStartSecondNumber && currentNumber <= hardEndSecondNumber) {
+                  directory = gameDetailsList[gamePicked].play.playModes['Hard'][1]['Directory'];
+                } */
+                print("num");
+                print(maxCategories);
+                print(currentNumber);
+                print(startendnumbers);
+                for(int i=0;i<maxCategories;i++){
+                    if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
+                      print(i);
+                      directory = gameDetailsList[gamePicked].play.playModes['Easy'][i]['Directory'];
+                    }
                 }
-              }
-              print("done");
-              return Column(
-                children: [
-                  Expanded(
-                    child: Image.asset('$directory/$currentNumber.jpg'), 
-                  ),
-                  Text(
-                    "\nCorrect Answer: $Corrans \n""Your Answer: $Userans",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height:20),
-                ],
-              );
-            },
+                for(int i=maxCategories;i<2*maxCategories;i++){
+                  print("inside");
+                  print(startendnumbers[2*i]);
+                  print("s");
+                  print(startendnumbers[2*i+1]);
+                  if (currentNumber >= startendnumbers[2*i] && currentNumber <= startendnumbers[2*i+1]) {
+                    directory = gameDetailsList[gamePicked].play.playModes['Hard'][i-maxCategories]['Directory'];
+                  }
+                }
+                print("done");
+                return Column(
+                  children: [
+                    /* Expanded(
+                      child: Image.asset('$directory/$currentNumber.jpg',height: imageSize, 
+                    width: imageSize,) 
+                    ),*/
+                    Image.asset(
+                      '$directory/$currentNumber.jpg',
+                      height: imageSize,
+                      width: imageSize,
+                      fit: BoxFit.contain, // or BoxFit.cover based on need
+                    ),
+                    Text(
+                      "\nCorrect Answer: $Corrans \n""Your Answer: $Userans",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height:20),
+                  ],
+                );
+              },
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  });
   }
 }
